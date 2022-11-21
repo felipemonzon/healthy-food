@@ -1,6 +1,7 @@
 package com.moontech.library.apis;
 
 import com.moontech.library.constants.RoutesConstant;
+import com.moontech.library.models.responses.InitialUserResponse;
 import com.moontech.library.models.responses.UserResponse;
 import com.moontech.library.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * APIS para usuarios.
@@ -26,8 +29,24 @@ public class UserController {
   /** Servicio de usuarios. */
   private final UserService userService;
 
-  @GetMapping(path = RoutesConstant.DATA_RETRIEVE_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<UserResponse> retrieve(@PageableDefault Pageable pageable) {
+  /**
+   * Consulta todos los usuarios.
+   *
+   * @param pageable datos de paginación
+   * @return lista de usuarios
+   */
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<UserResponse>> retrieve(@PageableDefault Pageable pageable) {
     return ResponseEntity.ok(this.userService.retrieve(pageable));
+  }
+
+  /**
+   * Recurso para cargar los datos iniciales para la página de usuarios.
+   *
+   * @return lista de sucursales y perfiles.
+   */
+  @GetMapping(path = RoutesConstant.INITIAL_DATA_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<InitialUserResponse> initialUserPage() {
+    return ResponseEntity.ok(this.userService.initialUser());
   }
 }

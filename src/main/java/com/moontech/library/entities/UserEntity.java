@@ -1,5 +1,6 @@
 package com.moontech.library.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.moontech.library.constants.DatabaseConstant;
 import com.moontech.library.enums.Genre;
 import lombok.Getter;
@@ -24,6 +25,8 @@ import java.util.Set;
 @Table(name = DatabaseConstant.USERS_TABLE)
 @EntityListeners(AuditingEntityListener.class)
 public class UserEntity extends AuditableEntity {
+  /** Serial. */
+  private static final long serialVersionUID = -8089684905670011173L;
   /** Identificador del usuario. */
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -59,4 +62,11 @@ public class UserEntity extends AuditableEntity {
       inverseJoinColumns = {@JoinColumn(name = DatabaseConstant.PROPERTY_ROL_ID)})
   @Column(name = DatabaseConstant.PROPERTY_ROL_ID, nullable = false)
   private Set<RoleEntity> roles;
+  /** Sucursal del empleado. */
+  @JsonIgnore
+  @ManyToOne
+  @JoinColumn(
+      name = DatabaseConstant.PROPERTY_OFFICE_ID,
+      referencedColumnName = DatabaseConstant.PROPERTY_USER_BRANCH)
+  private OfficeEntity branchOffice;
 }

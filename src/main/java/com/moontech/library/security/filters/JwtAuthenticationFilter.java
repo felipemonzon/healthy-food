@@ -3,17 +3,17 @@ package com.moontech.library.security.filters;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moontech.library.constants.ApiConstant;
 import com.moontech.library.constants.ErrorConstant;
+import com.moontech.library.constants.LogConstant;
 import com.moontech.library.exceptions.custom.ErrorResponse;
 import com.moontech.library.exceptions.custom.ForbiddenException;
 import com.moontech.library.exceptions.management.ExceptionManagement;
 import com.moontech.library.models.requests.AuthorizationRequest;
-import com.moontech.library.constants.LogConstant;
+import com.moontech.library.models.responses.LoginResponse;
 import com.moontech.library.security.constants.SecurityConstants;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -106,12 +106,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       HttpServletRequest request,
       HttpServletResponse response,
       FilterChain chain,
-      Authentication authResult) {
+      Authentication authResult)
+      throws IOException {
 
     String token = this.generateToken(authResult);
+    LoginResponse login = new ModelMapper().map(authResult.getPrincipal(), LoginResponse.class);
     response.addHeader(
         HttpHeaders.AUTHORIZATION,
         SecurityConstants.TOKEN_BEARER_PREFIX + ApiConstant.WHITE_SPACE + token);
+    response.getWriter().write(new ObjectMapper().writeValueAsString(login));
     log.info(LogConstant.LOGIN_SUCCESSFULLY);
   }
 
@@ -166,15 +169,5 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         .setIssuer(SecurityConstants.ISSUER_TOKEN)
         .setExpiration(new Date(System.currentTimeMillis() + this.validity * 1000))
         .compact();
-  }
-
-  /**
-   * Resuelve variables de spring placeholder.
-   *
-   * @return {@code PropertySourcesPlaceholderConfigurer}
-   */
-  @Bean
-  public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
-    return new PropertySourcesPlaceholderConfigurer();
   }
 }

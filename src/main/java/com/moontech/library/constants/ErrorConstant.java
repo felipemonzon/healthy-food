@@ -48,6 +48,28 @@ public class ErrorConstant {
   public static final int DATA_EXIST_CODE = 9007;
   /** Mensaje para dato existente. */
   public static final String DATA_EXIST_MESSAGE = "El dato ya existe ";
+  /** Mensaje de sucursal no encontrado. */
+  public static final String OFFICE_NOT_FOUND_MESSAGE =
+      "La sucursal con el id proporcionado no existe";
+  /** Mensaje de proveedor no encontrado. */
+  public static final String SUPPLIER_NOT_FOUND_MESSAGE =
+      "El proveedor con el id proporcionado no existe";
+  /** Mensaje de parámetro no encontrado. */
+  public static final String PARAMETER_NOT_FOUND_MESSAGE =
+      "El Parámetro con el id proporcionado no existe";
+  /** Mensaje para parámetro previamente registrado. */
+  public static final String PARAMETER_REGISTER_MESSAGE = "El Parámetro ya se encuentra registrado";
+  /** Mensaje de unidad no encontrado. */
+  public static final String UNIT_NOT_FOUND_MESSAGE = "La unidad con el id proporcionado no existe";
+  /** Mensaje para unidad previamente registrado. */
+  public static final String UNIT_REGISTER_MESSAGE = "La Unidad ya se Encuentra Registrado";
+  /** Mensaje de unidad no encontrado. */
+  public static final String PROFILE_NOT_FOUND_MESSAGE =
+      "El perfil con el id proporcionado no existe";
+  /** Mensaje para unidad previamente registrado. */
+  public static final String PROFILE_REGISTER_MESSAGE = "El Perfil ya se Encuentra Registrado";
+  /** Código para datos previamente registrados. */
+  public static final int REGISTER_DATA_EXIST_CODE = 9004;
 
   /** Constructor privado. */
   private ErrorConstant() {}

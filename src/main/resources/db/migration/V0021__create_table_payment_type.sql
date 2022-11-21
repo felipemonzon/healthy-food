@@ -1,0 +1,12 @@
+CREATE TABLE payment_type (
+  id BIGINT NOT NULL,
+  description VARCHAR(30) NOT NULL,
+  PRIMARY KEY PK_PAYMENT_TYPE (id)
+);
+
+INSERT INTO payment_type (id, description) VALUES
+(1, 'EFECTIVO'),
+(2, 'TARJETA CREDITO'),
+(3, 'TARJETA DEBITO'),
+(4, 'TRANSFERENCIA ELECTRONICA');
+

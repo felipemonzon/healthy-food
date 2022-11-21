@@ -3,7 +3,8 @@ package com.moontech.library.business;
 import com.moontech.library.constants.ApiConstant;
 import com.moontech.library.entities.UserEntity;
 import com.moontech.library.entities.RoleEntity;
-import com.moontech.library.models.responses.LoginResponse;
+import com.moontech.library.models.responses.AuthorityResponse;
+import com.moontech.library.models.responses.SecurityResponse;
 import com.moontech.library.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Inicio de sesión.
@@ -42,13 +44,14 @@ public class LoginBusiness implements UserDetailsService {
             .findByUsername(username)
             .orElseThrow(
                 () -> new UsernameNotFoundException("User Not Found with username: " + username));
-    LoginResponse credential = new ModelMapper().map(this.build(user), LoginResponse.class);
+    SecurityResponse credential = new ModelMapper().map(this.build(user), SecurityResponse.class);
     credential.setCel(user.getCel());
     credential.setEmail(user.getEmail());
     credential.setFirstName(user.getFirstName());
     credential.setLastName(user.getLastName());
     credential.setGenre(user.getGenre());
     credential.setDisplayName(user.getFirstName() + ApiConstant.WHITE_SPACE + user.getLastName());
+    credential.setProfiles(user.getRoles().stream().map(this::mapping).collect(Collectors.toSet()));
     return credential;
   }
 
@@ -73,5 +76,15 @@ public class LoginBusiness implements UserDetailsService {
     Set<SimpleGrantedAuthority> authorities = new HashSet<>();
     roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
     return authorities;
+  }
+
+  /**
+   * Convierte una entidad {@code RoleEntity} a uno de tipo {@code AuthorityResponse}
+   *
+   * @param entity objeto de tipo {@link RoleEntity}
+   * @return objeto de salida de la api de perfiles
+   */
+  private AuthorityResponse mapping(RoleEntity entity) {
+    return new ModelMapper().map(entity, AuthorityResponse.class);
   }
 }

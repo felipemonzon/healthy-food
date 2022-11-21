@@ -17,4 +17,8 @@ public abstract class SecurityConstants {
   public static final String CUSTOMER_ALLOWED = "hasRole('CUSTOMER')";
   /** Permite solo perfil administrador. */
   public static final String ADMIN_ALLOWED = "hasRole('ADMIN')";
+  /** Prefijo para guardar un rol. */
+  public static final String ROLE_PREFIX = "ROLE_";
+
+  private SecurityConstants() {}
 }

@@ -1,7 +1,7 @@
 package com.moontech.library.configs;
 
 import com.moontech.library.constants.ApiConstant;
-import com.moontech.library.models.responses.LoginResponse;
+import com.moontech.library.models.responses.SecurityResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -26,11 +26,11 @@ public class AuditorAware implements org.springframework.data.domain.AuditorAwar
   public Optional<String> getCurrentAuditor() {
     String user = ApiConstant.USER_SYSTEM;
     if (Objects.nonNull(SecurityContextHolder.getContext().getAuthentication())) {
-      LoginResponse login =
+      SecurityResponse login =
           new ModelMapper()
               .map(
                   SecurityContextHolder.getContext().getAuthentication().getPrincipal(),
-                  LoginResponse.class);
+                  SecurityResponse.class);
       user = login.getUsername();
     }
     return Optional.of(user);

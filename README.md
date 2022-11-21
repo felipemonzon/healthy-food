@@ -53,14 +53,14 @@ Las pruebas se realizaron con mockito y junit
 * Intellij IDEA
 
 ### Generación de Reportes 📋
-Brindan un panorama general de varios reportes que son generados automaticamente por Maven.
+Brindan un panorama general de varios reportes que son generados automáticamente por Maven.
 
 
 Los reportes se generan en la carpeta target > site > index.html
 
 ## Versionado 📌
 
-Usamos [GithHub](https://github.com/felipemonzon/spring-template) para el versionado.
+Usamos [GitHub](https://github.com/felipemonzon/spring-template) para el versionado.
 
 ## Autores ✒️
 

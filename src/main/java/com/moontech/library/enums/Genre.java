@@ -8,6 +8,5 @@ package com.moontech.library.enums;
  */
 public enum Genre {
   MALE,
-  FEMALE,
-  OTHER
+  FEMALE
 }

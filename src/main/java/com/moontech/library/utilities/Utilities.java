@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 public abstract class Utilities {
   /** Formato de salida de la respuesta de error. */
   public static final String ERROR_DATE_PATTER = "yyyy-MM-dd HH:mm:ss";
+  /** Espacio en blanco. */
+  public static final String WHITE_SPACE = " ";
 
   /**
    * Obtiene la pagina actual.
@@ -26,4 +28,7 @@ public abstract class Utilities {
     }
     return page;
   }
+
+  /** Constructor privado. */
+  private Utilities() {}
 }

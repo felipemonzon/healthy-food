@@ -1,7 +1,10 @@
 package com.moontech.library.models.requests;
 
 import com.moontech.library.enums.Genre;
+import com.moontech.library.models.responses.OfficeResponse;
 import lombok.Data;
+
+import java.util.Set;
 
 /**
  * Objeto de entrada para la api de usuarios.
@@ -25,4 +28,8 @@ public class User {
   private String cel;
   /** Propiedad para el género. */
   private Genre genre;
+  /** Sucursal del empleado. */
+  private OfficeResponse branchOffice;
+  /** Roles del usuario. */
+  Set<String> authorities;
 }

@@ -5,16 +5,17 @@ server:
   port: 8080
 spring:
   application:
-    name: spring-template
+    name: healthy-food-template
   main.banner-mode: off
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/library
+    url: jdbc:mysql://localhost:3306/healthyFood
     username: root
-    password:
+    password: root
   jpa:
     naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     hibernate.ddl-auto: update
+
 
 # ===================================================================
 # SECURITY PROPERTIES
@@ -32,7 +33,7 @@ logging:
     file: '[%X{data}%thread] [%X{X-B3-TraceId:-}] - %5p'
     console: "%p, %d{'yyyy-MM-dd HH:mm:ss,SSS',America/Mexico_City}, %C{1}:%M:%L, %X{mdc.uuid}, %m%n%ex{3}"
   level:
-    com.moontech.library.books.management: DEBUG
+    com.moontech.library: DEBUG
     org:
       springframework.data: DEBUG
       hibernate:
@@ -47,15 +48,15 @@ api:
     basePath: /api
     domain:
       users: /users
-      authors: /authors
-      categories: /categories
-      publishers: /publishers
-      books: /books
+      offices: /offices
+      supplier: /suppliers
+      parameters: /parameters
+      units: /units
+      profiles: /profiles
     data:
-      retrieve: /retrieve
-      create: /create
       modified: /{id}
-      search: /retrieve/{search}
+      search: /{search}
+      initial: /initial
       authentication: ${api.uri.domain.users}/authentication
   interceptorPath: "/**"
 
@@ -64,9 +65,9 @@ api:
 # ===================================================================
 swagger:
   basePackage: com.moontech
-  title: SERV-template-service
-  descriptionApi: Gestion y administracio de librerias.
+  title: SERV-healthy-food-service
+  descriptionApi: Gestion y administracio de nutriologos.
   version: 1.0.0
-  nameDeveloper: Felipe Monzo
+  nameDeveloper: Felipe Monzon
   contactUrl: https://felipemonzon.github.io/
   emailDeveloper: felipemonzon2705@gmail.com

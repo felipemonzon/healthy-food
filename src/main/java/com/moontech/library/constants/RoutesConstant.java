@@ -9,20 +9,22 @@ package com.moontech.library.constants;
 public abstract class RoutesConstant {
   /** Ruta base para usuarios. */
   public static final String USERS_BASE_PATH = "${api.uri.domain.users}";
-  /** Ruta para guardar los datos. */
-  public static final String DATA_CREATE_PATH = "${api.uri.data.create}";
-  /** Ruta para actualizar o eliminar los datos. */
+  /** Ruta base para sucursales. */
+  public static final String OFFICE_BASE_PATH = "${api.uri.domain.offices}";
+  /** Ruta base para proveedores. */
+  public static final String SUPPLIER_BASE_PATH = "${api.uri.domain.supplier}";
+  /** Ruta base para parámetros. */
+  public static final String PARAMETER_BASE_PATH = "${api.uri.domain.parameters}";
+  /** Ruta base para unidades. */
+  public static final String UNITS_BASE_PATH = "${api.uri.domain.units}";
+  /** Ruta base para sucursales. */
+  public static final String PROFILE_BASE_PATH = "${api.uri.domain.profiles}";
+  /** Ruta para búsqueda datos. */
+  public static final String SEARCH_PATH = "${api.uri.data.search}";
+  /** Ruta para modificar datos. */
   public static final String DATA_MODIFIED_PATH = "${api.uri.data.modified}";
-  /** Ruta para consulta de los datos. */
-  public static final String DATA_RETRIEVE_PATH = "${api.uri.data.retrieve}";
-  /** Ruta base para libros. */
-  public static final String BOOKS_BASE_PATH = "${api.uri.domain.books}";
-  /** Ruta base para autores. */
-  public static final String AUTHORS_BASE_PATH = "${api.uri.domain.authors}";
-  /** Ruta base para categorías. */
-  public static final String CATEGORIES_BASE_PATH = "${api.uri.domain.categories}";
-  /** Ruta base para editoriales. */
-  public static final String PUBLISHERS_BASE_PATH = "${api.uri.domain.publishers}";
+  /** Ruta para cargar datos iniciales a páginas. */
+  public static final String INITIAL_DATA_PATH = "${api.uri.data.initial}";
 
   /** Constructor de la class. */
   private RoutesConstant() {}

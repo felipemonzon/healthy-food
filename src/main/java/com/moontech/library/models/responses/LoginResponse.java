@@ -1,24 +1,18 @@
 package com.moontech.library.models.responses;
 
 import com.moontech.library.enums.Genre;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.Data;
 
-import java.util.Collection;
+import java.util.Set;
 
 /**
- * Respuesta de inicio de sesión.
+ * Clase para retornar un login exitoso.
  *
  * @author Felipe Monzón
- * @since Jan 04, 2022
+ * @since 17 jul., 2022
  */
 @Data
-@Builder
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-public class LoginResponse implements UserDetails {
+public class LoginResponse {
   /** Identificador del usuario. */
   private Long id;
   /** Nombre de usuario. */
@@ -33,53 +27,8 @@ public class LoginResponse implements UserDetails {
   private String cel;
   /** Propiedad para el género. */
   private Genre genre;
-  /** Contraseña. */
-  private String password;
-  /** Habilitado. */
-  private Boolean enabled;
-  /** Cuenta expirada. */
-  private Boolean accountNonExpired;
-  /** Cuenta bloqueada. */
-  private Boolean accountNonLocked;
-  /** Credenciales no expiradas. */
-  private boolean credentialsNonExpired;
-  /** Perfiles del usuario. */
-  private Collection<? extends GrantedAuthority> authorities;
   /** Nombre completo. */
   private String displayName;
-  /** Perfiles del usuario. */
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return authorities;
-  }
-
-  @Override
-  public String getPassword() {
-    return password;
-  }
-
-  @Override
-  public String getUsername() {
-    return username;
-  }
-
-  @Override
-  public boolean isAccountNonExpired() {
-    return accountNonExpired;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    return accountNonLocked;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return credentialsNonExpired;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return enabled;
-  }
+  /** Perfiles */
+  private Set<AuthorityResponse> profiles;
 }

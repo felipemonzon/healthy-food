@@ -1,7 +1,10 @@
 package com.moontech.library.services;
 
+import com.moontech.library.models.responses.InitialUserResponse;
 import com.moontech.library.models.responses.UserResponse;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 /**
  * Reglas de negocio de usuarios.
@@ -16,5 +19,12 @@ public interface UserService {
    * @param pageable página a consultar
    * @return lista de usuarios
    */
-  UserResponse retrieve(Pageable pageable);
+  List<UserResponse> retrieve(Pageable pageable);
+
+  /**
+   * Consulta los datos para iniciar la pantalla de usuarios.
+   *
+   * @return {@code InitialUserResponse}
+   */
+  InitialUserResponse initialUser();
 }
