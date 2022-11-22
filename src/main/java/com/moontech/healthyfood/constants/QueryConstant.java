@@ -1,20 +1,7 @@
-/*
- * Copyright (c) 2021 Sano Pak
- *
- * Licensed under the GNU General Public License, Version 3 (the "License"); you may not use this
- * file except in compliance with the License. You may obtain a copy of the License at
- *
- * https://www.gnu.org/licenses/gpl-3.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
- */
 package com.moontech.healthyfood.constants;
 
 /**
- * Consultas estáticas.
+ * Consultas estáticas para las consultas.
  *
  * @author Felipe Monzón
  * @enterprise moontech
@@ -28,7 +15,6 @@ public class QueryConstant {
    *   <li>Nombre
    *   <li>E-mail
    *   <li>teléfono
-   * </ul>
    */
   public static final String FIND_USER_BY =
       "SELECT u.id, u.name, u.email, u.phone, u.active, u.id_branch_office, u.created_by, u.created_date, u.updated_by, u.updated_date, u.password "
@@ -44,7 +30,6 @@ public class QueryConstant {
    *   <li>Teléfono
    *   <li>Coordenadas
    *   <li>Dirección
-   * </ul>
    */
   public static final String FIND_OFFICES_BY =
       "SELECT b.id, b.name, b.phone, b.address, b.active, b.manager, created_by, created_date, updated_by, updated_date "
@@ -58,7 +43,6 @@ public class QueryConstant {
    * <ul>
    *   <li>Nombre
    *   <li>Valor
-   * </ul>
    */
   public static final String FIND_PROFILES_BY =
       "SELECT r.id, r.name, r.value "
@@ -72,7 +56,6 @@ public class QueryConstant {
    *   <li>Nombre
    *   <li>Teléfono
    *   <li>Dirección
-   * </ul>
    */
   public static final String FIND_SUPPLIERS_BY =
       "SELECT s.id, s.name, s.phone, s.address, s.enterprise, s.rfc, s.status, s.comments, s.created_by, s.created_date, s.updated_by, s.updated_date "
@@ -87,7 +70,6 @@ public class QueryConstant {
    *   <li>Descripción
    *   <li>Clave
    *   <li>Valor
-   * </ul>
    */
   public static final String FIND_PARAMETERS_BY =
       "SELECT p.id, p.description, p.value, p.status, p.created_by, p.created_date, p.updated_by, p.updated_date "
@@ -101,7 +83,6 @@ public class QueryConstant {
    * <ul>
    *   <li>Nombre
    *   <li>Abreviación
-   * </ul>
    */
   public static final String FIND_UNITS_BY =
       "SELECT u.id, u.name, u.abbreviation, u.status, u.created_by, u.created_date, u.updated_by, u.updated_date "
@@ -114,7 +95,6 @@ public class QueryConstant {
    * <ul>
    *   <li>Nombre
    *   <li>Proveedor
-   * </ul>
    */
   public static final String FIND_INGREDIENT_BY =
       "SELECT i.id, i.name, i.supplier, i.quantity, i.unit, i.raw, i.cooked, i.calories, i.fat, i.carbohydrates, "
@@ -123,14 +103,12 @@ public class QueryConstant {
           + "INNER JOIN suppliers s ON s.id = i.supplier "
           + "WHERE i.name LIKE %:search% "
           + "OR s.name LIKE %:search%";
-
   /**
    * Consulta colonias por:
    *
    * <ul>
    *   <li>Nombre
    *   <li>Código Postal
-   * </ul>
    */
   public static final String FIND_SUBURB_BY =
       "SELECT s.id, s.name, s.postal_code, s.delivery_cost, s.id_municipality, s.status, s.created_by, s.created_date, s.updated_by, s.updated_date "
