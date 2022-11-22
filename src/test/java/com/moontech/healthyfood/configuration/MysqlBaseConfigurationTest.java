@@ -1,8 +1,5 @@
 package com.moontech.healthyfood.configuration;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
@@ -16,7 +13,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  * @since 04 nov., 2022
  */
 @Testcontainers
-public class MysqlBaseConfigurationTest {
+public abstract class MysqlBaseConfigurationTest {
   /** Contenedor de Mysql. */
   private static final MySQLContainer<?> mysqlContainer;
 
@@ -35,15 +32,5 @@ public class MysqlBaseConfigurationTest {
     registry.add("spring.datasource.url", mysqlContainer::getJdbcUrl);
     registry.add("spring.datasource.username", mysqlContainer::getUsername);
     registry.add("spring.datasource.password", mysqlContainer::getPassword);
-  }
-
-  @AfterAll
-  static void stopDb() {
-    mysqlContainer.stop();
-  }
-
-  @Test
-  void test() {
-    Assertions.assertTrue(Boolean.TRUE);
   }
 }
