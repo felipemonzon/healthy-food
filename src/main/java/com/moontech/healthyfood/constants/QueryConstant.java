@@ -11,10 +11,7 @@ public class QueryConstant {
   /**
    * Consulta usuario por:
    *
-   * <ul>
-   *   <li>Nombre
-   *   <li>E-mail
-   *   <li>teléfono
+   * <p>Nombre E-mail teléfono
    */
   public static final String FIND_USER_BY =
       "SELECT u.id, u.name, u.email, u.phone, u.active, u.id_branch_office, u.created_by, u.created_date, u.updated_by, u.updated_date, u.password "
@@ -22,15 +19,7 @@ public class QueryConstant {
           + "WHERE u.name LIKE %:search% "
           + "OR u.email LIKE %:search% "
           + "OR u.phone LIKE %:search% ";
-  /**
-   * Consulta sucursal por:
-   *
-   * <ul>
-   *   <li>Nombre
-   *   <li>Teléfono
-   *   <li>Coordenadas
-   *   <li>Dirección
-   */
+  /** Consulta sucursal por: Nombre Teléfono Coordenadas Dirección */
   public static final String FIND_OFFICES_BY =
       "SELECT b.id, b.name, b.phone, b.address, b.active, b.manager, created_by, created_date, updated_by, updated_date "
           + "FROM offices b "
@@ -38,11 +27,9 @@ public class QueryConstant {
           + "OR b.phone LIKE %:search% "
           + "OR b.address LIKE %:search%";
   /**
-   * Consulta perfile por:
+   * Consulta perfiles por:
    *
-   * <ul>
-   *   <li>Nombre
-   *   <li>Valor
+   * <p>Nombre, Valor
    */
   public static final String FIND_PROFILES_BY =
       "SELECT r.id, r.name, r.value "
@@ -52,10 +39,7 @@ public class QueryConstant {
   /**
    * Consulta proveedores por:
    *
-   * <ul>
-   *   <li>Nombre
-   *   <li>Teléfono
-   *   <li>Dirección
+   * <p>Nombre, Teléfono, Dirección
    */
   public static final String FIND_SUPPLIERS_BY =
       "SELECT s.id, s.name, s.phone, s.address, s.enterprise, s.rfc, s.status, s.comments, s.created_by, s.created_date, s.updated_by, s.updated_date "
@@ -66,10 +50,7 @@ public class QueryConstant {
   /**
    * Consulta parámetros por:
    *
-   * <ul>
-   *   <li>Descripción
-   *   <li>Clave
-   *   <li>Valor
+   * <p>Descripción, Clave, Valor
    */
   public static final String FIND_PARAMETERS_BY =
       "SELECT p.id, p.description, p.value, p.status, p.created_by, p.created_date, p.updated_by, p.updated_date "
@@ -80,9 +61,7 @@ public class QueryConstant {
   /**
    * Consulta unidades por:
    *
-   * <ul>
-   *   <li>Nombre
-   *   <li>Abreviación
+   * <p>Nombre, Abreviación
    */
   public static final String FIND_UNITS_BY =
       "SELECT u.id, u.name, u.abbreviation, u.status, u.created_by, u.created_date, u.updated_by, u.updated_date "
@@ -92,9 +71,7 @@ public class QueryConstant {
   /**
    * Consulta ingredientes por:
    *
-   * <ul>
-   *   <li>Nombre
-   *   <li>Proveedor
+   * <p>Nombre, Proveedor
    */
   public static final String FIND_INGREDIENT_BY =
       "SELECT i.id, i.name, i.supplier, i.quantity, i.unit, i.raw, i.cooked, i.calories, i.fat, i.carbohydrates, "
@@ -106,9 +83,7 @@ public class QueryConstant {
   /**
    * Consulta colonias por:
    *
-   * <ul>
-   *   <li>Nombre
-   *   <li>Código Postal
+   * <p>Nombre, Código Postal
    */
   public static final String FIND_SUBURB_BY =
       "SELECT s.id, s.name, s.postal_code, s.delivery_cost, s.id_municipality, s.status, s.created_by, s.created_date, s.updated_by, s.updated_date "
