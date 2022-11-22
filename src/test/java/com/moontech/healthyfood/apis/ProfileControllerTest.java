@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moontech.healthyfood.configuration.MysqlBaseConfigurationTest;
 import com.moontech.healthyfood.configuration.TestConstants;
 import com.moontech.healthyfood.services.RoleService;
+import java.util.ArrayList;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,9 +21,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * Prueba del controlador de perfiles.

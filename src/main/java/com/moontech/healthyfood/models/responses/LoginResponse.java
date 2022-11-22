@@ -1,9 +1,8 @@
 package com.moontech.healthyfood.models.responses;
 
 import com.moontech.healthyfood.enums.Genre;
-import lombok.Data;
-
 import java.util.Set;
+import lombok.Data;
 
 /**
  * Clase para retornar un login exitoso.

@@ -1,11 +1,14 @@
 package com.moontech.healthyfood.business;
 
 import com.moontech.healthyfood.constants.ApiConstant;
-import com.moontech.healthyfood.entities.UserEntity;
 import com.moontech.healthyfood.entities.RoleEntity;
+import com.moontech.healthyfood.entities.UserEntity;
 import com.moontech.healthyfood.models.responses.AuthorityResponse;
 import com.moontech.healthyfood.models.responses.SecurityResponse;
 import com.moontech.healthyfood.repositories.UserRepository;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,10 +20,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Inicio de sesión.

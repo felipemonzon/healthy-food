@@ -1,9 +1,8 @@
 package com.moontech.healthyfood.models.responses;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.List;
+import lombok.Data;
 
 /**
  * Respuesta para la página inicial de usuarios.

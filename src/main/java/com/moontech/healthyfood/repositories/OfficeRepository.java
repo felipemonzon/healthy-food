@@ -2,11 +2,10 @@ package com.moontech.healthyfood.repositories;
 
 import com.moontech.healthyfood.constants.QueryConstant;
 import com.moontech.healthyfood.entities.OfficeEntity;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-import java.util.List;
 
 /**
  * Repositorio para sucursales.

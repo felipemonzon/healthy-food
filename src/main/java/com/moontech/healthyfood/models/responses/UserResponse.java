@@ -1,10 +1,9 @@
 package com.moontech.healthyfood.models.responses;
 
 import com.moontech.healthyfood.enums.Genre;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Set;
+import lombok.Data;
 
 /**
  * Respuesta para la api de usuarios.

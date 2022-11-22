@@ -1,8 +1,7 @@
 package com.moontech.healthyfood.models.requests;
 
-import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
+import lombok.Data;
 
 /**
  * Entrada para los datos de perfile.

@@ -1,12 +1,11 @@
 package com.moontech.healthyfood.entities;
 
 import com.moontech.healthyfood.constants.DatabaseConstant;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
-
-import javax.persistence.*;
 
 /**
  * Entidad para la tabla "proveedores".

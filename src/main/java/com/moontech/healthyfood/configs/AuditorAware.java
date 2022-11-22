@@ -2,12 +2,11 @@ package com.moontech.healthyfood.configs;
 
 import com.moontech.healthyfood.constants.ApiConstant;
 import com.moontech.healthyfood.models.responses.SecurityResponse;
+import java.util.Objects;
+import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Configuración de la clase auditora.

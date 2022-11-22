@@ -1,9 +1,8 @@
 package com.moontech.healthyfood.repositories;
 
 import com.moontech.healthyfood.entities.UserEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Repositorio de usuarios.

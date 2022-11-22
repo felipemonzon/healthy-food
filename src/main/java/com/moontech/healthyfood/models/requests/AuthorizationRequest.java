@@ -1,8 +1,7 @@
 package com.moontech.healthyfood.models.requests;
 
-import lombok.Data;
-
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * Objeto para autenticación de usuarios.

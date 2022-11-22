@@ -2,9 +2,8 @@ package com.moontech.healthyfood.models.requests;
 
 import com.moontech.healthyfood.enums.Genre;
 import com.moontech.healthyfood.models.responses.OfficeResponse;
-import lombok.Data;
-
 import java.util.Set;
+import lombok.Data;
 
 /**
  * Objeto de entrada para la api de usuarios.

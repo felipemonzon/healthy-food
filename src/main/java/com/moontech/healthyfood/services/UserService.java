@@ -2,9 +2,8 @@ package com.moontech.healthyfood.services;
 
 import com.moontech.healthyfood.models.responses.InitialUserResponse;
 import com.moontech.healthyfood.models.responses.UserResponse;
-import org.springframework.data.domain.Pageable;
-
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Reglas de negocio de usuarios.

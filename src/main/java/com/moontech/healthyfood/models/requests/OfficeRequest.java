@@ -1,8 +1,7 @@
 package com.moontech.healthyfood.models.requests;
 
-import lombok.Data;
-
 import javax.validation.constraints.*;
+import lombok.Data;
 
 /**
  * Clase usada de para guardar una sucursal.

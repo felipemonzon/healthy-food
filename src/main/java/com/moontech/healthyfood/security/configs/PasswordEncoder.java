@@ -1,4 +1,4 @@
- package com.moontech.healthyfood.security.configs;
+package com.moontech.healthyfood.security.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

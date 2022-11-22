@@ -1,7 +1,7 @@
 package com.moontech.healthyfood.configs;
 
-import com.moontech.healthyfood.properties.PropertiesConstant;
 import com.moontech.healthyfood.interceptors.TimeInterceptor;
+import com.moontech.healthyfood.properties.PropertiesConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

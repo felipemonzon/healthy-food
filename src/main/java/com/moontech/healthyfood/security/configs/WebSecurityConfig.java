@@ -1,8 +1,10 @@
 package com.moontech.healthyfood.security.configs;
 
 import com.moontech.healthyfood.properties.SecurityProperties;
-import com.moontech.healthyfood.security.filters.JwtAuthorizationFilter;
 import com.moontech.healthyfood.security.filters.JwtAuthenticationFilter;
+import com.moontech.healthyfood.security.filters.JwtAuthorizationFilter;
+import java.util.Arrays;
+import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.HttpMethod;
@@ -21,9 +23,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * @author Felipe Monzón

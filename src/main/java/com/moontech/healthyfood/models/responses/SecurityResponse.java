@@ -1,15 +1,14 @@
 package com.moontech.healthyfood.models.responses;
 
 import com.moontech.healthyfood.enums.Genre;
+import java.util.Collection;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.Set;
 
 /**
  * Respuesta de inicio de sesión.

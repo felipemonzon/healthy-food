@@ -1,8 +1,7 @@
 package com.moontech.healthyfood.models.responses;
 
-import lombok.Data;
-
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * Respuesta de la API de units.
