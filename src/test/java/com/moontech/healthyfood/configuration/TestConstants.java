@@ -10,6 +10,10 @@ package com.moontech.healthyfood.configuration;
 public abstract class TestConstants {
   /** UUID header. */
   public static final String UUID_HEADER = "uuid";
+  /** Perfil de administrador. */
+  public static final String ROLE_ADMIN = "ADMIN";
+  /** Log running. */
+  public static final String TEST_RUNNING = "Running {}";
 
   private TestConstants() {}
 }

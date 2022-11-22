@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Test del controlador de perfiles.
+ * Prueba del controlador de perfiles.
  *
  * @author Felipe Monzón
  * @enterprise moontech
@@ -34,7 +34,7 @@ import java.util.UUID;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@WithMockUser(roles = "ADMIN")
+@WithMockUser(roles = TestConstants.ROLE_ADMIN)
 class ProfileControllerTest extends MysqlBaseConfigurationTest {
   @Autowired private MockMvc mockMvc;
   /** Servicio de perfiles. */
@@ -47,7 +47,7 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
   @Test
   @DisplayName("GET /profiles empty list")
   void retrieve_all_profiles(TestInfo testInfo) throws Exception {
-    log.info("Running {}", testInfo.getDisplayName());
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     Mockito.when(this.roleService.retrieve()).thenReturn(new ArrayList<>());
     this.mockMvc
         .perform(
