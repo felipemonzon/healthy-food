@@ -5,6 +5,7 @@ import com.moontech.healthyfood.models.responses.SecurityResponse;
 import java.util.Objects;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @since 21/12/21
  */
 @Component
-public class AuditorAware implements org.springframework.data.domain.AuditorAware<String> {
+public class Auditor implements AuditorAware<String> {
   /**
    * Consulta el usuario auditor.
    *

@@ -32,4 +32,6 @@ public abstract class ApiConstant {
   public static final String WHITE_SPACE = " ";
   /** Usuario de sistema. */
   public static final String USER_SYSTEM = "System";
+
+  private ApiConstant() {}
 }

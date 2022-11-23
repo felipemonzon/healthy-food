@@ -248,7 +248,7 @@ public class ExceptionManagement {
       HttpServletRequest req, DataIntegrityViolationException ex) {
     String error = NestedExceptionUtils.getMostSpecificCause(ex).getMessage();
 
-    String[] message = Arrays.stream(error.split("[:]")).map(String::trim).toArray(String[]::new);
+    String[] message = Arrays.stream(error.split(":")).map(String::trim).toArray(String[]::new);
     ErrorResponse errorResponse =
         ErrorResponse.builder()
             .type(ErrorType.ERROR.name())

@@ -10,10 +10,10 @@ import java.util.List;
  * @since 12/03/21
  */
 public class BadRequestException extends RuntimeException {
-  /** UID auto generado para el versionado de la clase. */
+  /** UID autogenerado para el versionado de la clase. */
   private static final long serialVersionUID = 8925303792177335247L;
 
-  /** Lista de campos incorrectos en la peticion. */
+  /** Lista de campos incorrectos en la petición. */
   private final List<String> badFields;
 
   /**
