@@ -51,6 +51,10 @@ public class SecurityResponse implements UserDetails {
   private String displayName;
   /** Perfiles del usuario */
   private Set<AuthorityResponse> profiles;
+  /** Sucursal del empleado. */
+  private String branchOfficeName;
+  /** Identificador de la sucursal del empleado. */
+  private Long branchOfficeId;
   /** Perfiles del usuario. */
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

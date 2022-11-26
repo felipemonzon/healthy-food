@@ -1,9 +1,11 @@
 package com.moontech.healthyfood.services;
 
+import com.moontech.healthyfood.models.requests.UserRequest;
 import com.moontech.healthyfood.models.responses.InitialUserResponse;
 import com.moontech.healthyfood.models.responses.UserResponse;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 
 /**
  * Reglas de negocio de usuarios.
@@ -26,4 +28,13 @@ public interface UserService {
    * @return {@code InitialUserResponse}
    */
   InitialUserResponse initialUser();
+
+  /**
+   * Actualiza los datos de perfil del usuario que inicio sesión.
+   *
+   * @param auth {@code Authentication}
+   * @param request {@code UserRequest}
+   * @return datos del usuario
+   */
+  UserResponse updateUserProfile(Authentication auth, UserRequest request);
 }

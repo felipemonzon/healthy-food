@@ -30,4 +30,8 @@ public class LoginResponse {
   private String displayName;
   /** Perfiles */
   private Set<AuthorityResponse> profiles;
+  /** Sucursal del empleado. */
+  private String branchOfficeName;
+  /** Identificador de la sucursal del empleado. */
+  private Long branchOfficeId;
 }

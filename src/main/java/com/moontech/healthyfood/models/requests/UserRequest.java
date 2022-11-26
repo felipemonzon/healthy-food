@@ -1,8 +1,10 @@
 package com.moontech.healthyfood.models.requests;
 
 import com.moontech.healthyfood.enums.Genre;
-import com.moontech.healthyfood.models.responses.OfficeResponse;
+import java.io.Serializable;
 import java.util.Set;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -12,23 +14,25 @@ import lombok.Data;
  * @since 31/12/21
  */
 @Data
-public class User {
+public class UserRequest implements Serializable {
   /** Identificador del usuario. */
   private long id;
   /** nombre del usuario. */
-  private String username;
+  @NotBlank private String username;
   /** Propiedad primer nombre. */
-  private String firstName;
+  @NotBlank private String firstName;
   /** Propiedad segundo nombre. */
-  private String lastName;
+  @NotBlank private String lastName;
   /** Propiedad para el correo. */
-  private String email;
+  @NotBlank private String email;
   /** Propiedad para el celular. */
-  private String cel;
+  @NotBlank private String cel;
   /** Propiedad para el género. */
-  private Genre genre;
+  @NotNull private Genre genre;
   /** Sucursal del empleado. */
-  private OfficeResponse branchOffice;
+  @NotNull private Long branchOfficeId;
   /** Roles del usuario. */
-  Set<String> authorities;
+  private Set<Long> profiles;
+  /** Contraseña */
+  private String password;
 }

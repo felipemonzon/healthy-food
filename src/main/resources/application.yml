@@ -53,6 +53,7 @@ api:
       parameters: /parameters
       units: /units
       profiles: /profiles
+      appointments: /appointments
     data:
       modified: /{id}
       search: /{search}

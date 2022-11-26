@@ -70,6 +70,11 @@ public class ErrorConstant {
   public static final String PROFILE_REGISTER_MESSAGE = "El Perfil ya se Encuentra Registrado";
   /** Código para datos previamente registrados. */
   public static final int REGISTER_DATA_EXIST_CODE = 9004;
+  /** Mensaje para usuario no existente. */
+  public static final String USER_NOT_FOUND_MESSAGE = "El usuario no existe";
+  /** Mensaje para error de seguridad cuando los usuarios no concuerdan. */
+  public static final String CANNOT_USER_PROFILE_UPDATE =
+      "Ocurrió un error al actualizar los datos del usuario %s.";
 
   /** Constructor privado. */
   private ErrorConstant() {}

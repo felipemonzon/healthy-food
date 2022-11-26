@@ -31,6 +31,8 @@ public class UserResponse implements Serializable {
   private String branchOfficeName;
   /** Identificador de la sucursal del empleado. */
   private long branchOfficeId;
+  /** Nombre completo. */
+  private String displayName;
   /** Roles del usuario. */
-  private Set<AuthorityResponse> authorities;
+  private Set<AuthorityResponse> profiles;
 }

@@ -45,10 +45,13 @@ public class LoginBusiness implements UserDetailsService {
                 () -> new UsernameNotFoundException("User Not Found with username: " + username));
     SecurityResponse credential = new ModelMapper().map(this.build(user), SecurityResponse.class);
     credential.setCel(user.getCel());
+    credential.setId(user.getId());
     credential.setEmail(user.getEmail());
     credential.setFirstName(user.getFirstName());
     credential.setLastName(user.getLastName());
     credential.setGenre(user.getGenre());
+    credential.setBranchOfficeId(user.getBranchOffice().getId());
+    credential.setBranchOfficeName(user.getBranchOffice().getName());
     credential.setDisplayName(user.getFirstName() + ApiConstant.WHITE_SPACE + user.getLastName());
     credential.setProfiles(user.getRoles().stream().map(this::mapping).collect(Collectors.toSet()));
     return credential;

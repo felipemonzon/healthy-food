@@ -17,8 +17,10 @@ public abstract class RoutesConstant {
   public static final String PARAMETER_BASE_PATH = "${api.uri.domain.parameters}";
   /** Ruta base para unidades. */
   public static final String UNITS_BASE_PATH = "${api.uri.domain.units}";
-  /** Ruta base para sucursales. */
+  /** Ruta base para perfiles. */
   public static final String PROFILE_BASE_PATH = "${api.uri.domain.profiles}";
+  /** Ruta base para citas. */
+  public static final String APPOINTMENT_BASE_PATH = "${api.uri.domain.appointments}";
   /** Ruta para búsqueda datos. */
   public static final String SEARCH_PATH = "${api.uri.data.search}";
   /** Ruta para modificar datos. */

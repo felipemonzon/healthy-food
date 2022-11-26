@@ -3,13 +3,14 @@ package com.moontech.healthyfood.apis;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moontech.healthyfood.configuration.MysqlBaseConfigurationTest;
 import com.moontech.healthyfood.configuration.TestConstants;
-import com.moontech.healthyfood.models.requests.ProfileRequest;
-import com.moontech.healthyfood.models.responses.AuthorityResponse;
-import com.moontech.healthyfood.services.RoleService;
+import com.moontech.healthyfood.models.requests.OfficeRequest;
+import com.moontech.healthyfood.models.responses.OfficeResponse;
+import com.moontech.healthyfood.services.OfficeService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 /**
- * Prueba del controlador de perfiles.
+ * Prueba del controlador de sucursales.
  *
  * @author Felipe Monzón
  * @enterprise moontech
@@ -38,20 +39,21 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @WithMockUser(roles = TestConstants.ROLE_ADMIN)
-class ProfileControllerTest extends MysqlBaseConfigurationTest {
+class OfficeControllerTest extends MysqlBaseConfigurationTest {
+  /** Implementación de mock mvc. */
   @Autowired private MockMvc mockMvc;
-  /** Servicio de perfiles. */
-  @MockBean private RoleService roleService;
+  /** Servicio de sucursales. */
+  @MockBean private OfficeService officeService;
   /** Mapper. */
   @Autowired private ObjectMapper objectMapper;
   /** Ruta base de perfiles. */
-  private static final String PROFILE_BASE_PATH = "/profiles";
+  private static final String PROFILE_BASE_PATH = "/offices";
 
   @Test
-  @DisplayName("GET /profiles empty list")
+  @DisplayName("GET /offices empty list")
   void retrieve_empty_profiles(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    Mockito.when(this.roleService.retrieve()).thenReturn(new ArrayList<>());
+    Mockito.when(this.officeService.retrieve()).thenReturn(new ArrayList<>());
     this.mockMvc
         .perform(
             MockMvcRequestBuilders.get(PROFILE_BASE_PATH)
@@ -62,11 +64,26 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
-  @DisplayName("GET /profiles success")
+  @DisplayName("GET /offices  search office")
+  void search_office(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    Mockito.when(this.officeService.retrieve())
+        .thenReturn(Collections.singletonList(this.getOfficeResponse()));
+    this.mockMvc
+        .perform(
+            MockMvcRequestBuilders.get(PROFILE_BASE_PATH + "/lejos")
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(
+            MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+  }
+
+  @Test
+  @DisplayName("GET /offices ")
   void retrieve_all_profiles(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    Mockito.when(this.roleService.retrieve())
-        .thenReturn(Collections.singletonList(this.getAuthorityResponse()));
+    Mockito.when(this.officeService.retrieve())
+        .thenReturn(Collections.singletonList(this.getOfficeResponse()));
     this.mockMvc
         .perform(
             MockMvcRequestBuilders.get(PROFILE_BASE_PATH)
@@ -78,23 +95,7 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
-  @DisplayName("GET /profiles search success")
-  void search_profiles(TestInfo testInfo) throws Exception {
-    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    Mockito.when(this.roleService.retrieve())
-        .thenReturn(Collections.singletonList(this.getAuthorityResponse()));
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(PROFILE_BASE_PATH + "/2L")
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(
-            MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.*", Matchers.hasSize(7)));
-  }
-
-  @Test
-  @DisplayName("POST /profiles success")
+  @DisplayName("POST /offices success")
   void save_success(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
@@ -102,12 +103,12 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
             MockMvcRequestBuilders.post(PROFILE_BASE_PATH)
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getProfileRequest())))
+                .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
         .andExpect(MockMvcResultMatchers.status().isCreated());
   }
 
   @Test
-  @DisplayName("PUT /profiles success")
+  @DisplayName("PUT /offices success")
   void update_success(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
@@ -115,23 +116,25 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
             MockMvcRequestBuilders.put(PROFILE_BASE_PATH + "/1")
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getProfileRequest())))
+                .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
         .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
   }
 
-  private ProfileRequest getProfileRequest() {
-    ProfileRequest request = new ProfileRequest();
+  private OfficeRequest getOfficeRequest() {
+    OfficeRequest request = new OfficeRequest();
     request.setId(1L);
-    request.setName("ROLE_ADMIN");
-    request.setValue(TestConstants.ROLE_ADMIN);
+    request.setName("lejana");
+    request.setAddress("far far away");
+    request.setActive(Boolean.TRUE);
+    request.setPhone("6677156788");
+    request.setIdManager(1L);
     return request;
   }
 
-  private AuthorityResponse getAuthorityResponse() {
-    AuthorityResponse response = new AuthorityResponse();
+  private OfficeResponse getOfficeResponse() {
+    OfficeResponse response = new OfficeResponse();
     response.setId(1L);
-    response.setName("ROLE_ADMIN");
-    response.setValue(TestConstants.ROLE_ADMIN);
+    response.setName(StringUtils.EMPTY);
     return response;
   }
 }

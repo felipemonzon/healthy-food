@@ -8,6 +8,7 @@ import com.moontech.healthyfood.services.RoleService;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class ProfileController {
   private final RoleService roleService;
 
   /**
-   * Consulta lor perfiles disponibles.
+   * Consulta los perfiles disponibles.
    *
    * @return lista de perfiles
    */
@@ -39,6 +40,17 @@ public class ProfileController {
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<AuthorityResponse>> retrieve() {
     return ResponseEntity.ok(this.roleService.retrieve());
+  }
+
+  /**
+   * Consulta los datos de un perfil por un dato de consulta
+   *
+   * @return perfiles encontrados
+   */
+  @GetMapping(path = RoutesConstant.SEARCH_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<AuthorityResponse>> findBy(
+      @PathVariable @Valid @NotBlank String search) {
+    return ResponseEntity.ok(this.roleService.findBy(search.trim().toLowerCase()));
   }
 
   /**

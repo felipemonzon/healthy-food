@@ -218,6 +218,7 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/constant/**/*</exclude>
+                                <exclude>**/models/**/*</exclude>
                                 <exclude>**/Main*</exclude>
                             </excludes>
                         </configuration>
