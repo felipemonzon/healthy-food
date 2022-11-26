@@ -4,21 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moontech.healthyfood.configuration.MysqlBaseConfigurationTest;
 import com.moontech.healthyfood.configuration.TestConstants;
 import com.moontech.healthyfood.models.requests.ProfileRequest;
-import com.moontech.healthyfood.models.responses.AuthorityResponse;
 import com.moontech.healthyfood.services.RoleService;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -38,20 +31,21 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @WithMockUser(roles = TestConstants.ROLE_ADMIN)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProfileControllerTest extends MysqlBaseConfigurationTest {
   @Autowired private MockMvc mockMvc;
   /** Servicio de perfiles. */
-  @MockBean private RoleService roleService;
+  @Autowired private RoleService roleService;
   /** Mapper. */
   @Autowired private ObjectMapper objectMapper;
   /** Ruta base de perfiles. */
   private static final String PROFILE_BASE_PATH = "/profiles";
 
   @Test
+  @Order(1)
   @DisplayName("GET /profiles empty list")
   void retrieve_empty_profiles(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    Mockito.when(this.roleService.retrieve()).thenReturn(new ArrayList<>());
     this.mockMvc
         .perform(
             MockMvcRequestBuilders.get(PROFILE_BASE_PATH)
@@ -65,8 +59,6 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
   @DisplayName("GET /profiles success")
   void retrieve_all_profiles(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    Mockito.when(this.roleService.retrieve())
-        .thenReturn(Collections.singletonList(this.getAuthorityResponse()));
     this.mockMvc
         .perform(
             MockMvcRequestBuilders.get(PROFILE_BASE_PATH)
@@ -81,8 +73,6 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
   @DisplayName("GET /profiles search success")
   void search_profiles(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    Mockito.when(this.roleService.retrieve())
-        .thenReturn(Collections.singletonList(this.getAuthorityResponse()));
     this.mockMvc
         .perform(
             MockMvcRequestBuilders.get(PROFILE_BASE_PATH + "/2L")
@@ -94,6 +84,7 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
+  @Order(2)
   @DisplayName("POST /profiles success")
   void save_success(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
@@ -107,6 +98,7 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
+  @Order(3)
   @DisplayName("PUT /profiles success")
   void update_success(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
@@ -125,13 +117,5 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
     request.setName("ROLE_ADMIN");
     request.setValue(TestConstants.ROLE_ADMIN);
     return request;
-  }
-
-  private AuthorityResponse getAuthorityResponse() {
-    AuthorityResponse response = new AuthorityResponse();
-    response.setId(1L);
-    response.setName("ROLE_ADMIN");
-    response.setValue(TestConstants.ROLE_ADMIN);
-    return response;
   }
 }

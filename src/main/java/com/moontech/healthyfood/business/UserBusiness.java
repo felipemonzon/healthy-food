@@ -13,7 +13,7 @@ import com.moontech.healthyfood.models.responses.InitialUserResponse;
 import com.moontech.healthyfood.models.responses.SecurityResponse;
 import com.moontech.healthyfood.models.responses.UserResponse;
 import com.moontech.healthyfood.repositories.UserRepository;
-import com.moontech.healthyfood.security.SecurityUtilities;
+import com.moontech.healthyfood.security.utilities.SecurityUtilities;
 import com.moontech.healthyfood.services.OfficeService;
 import com.moontech.healthyfood.services.RoleService;
 import com.moontech.healthyfood.services.UserService;

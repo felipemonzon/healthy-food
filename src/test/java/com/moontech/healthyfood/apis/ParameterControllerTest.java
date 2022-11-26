@@ -3,8 +3,8 @@ package com.moontech.healthyfood.apis;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moontech.healthyfood.configuration.MysqlBaseConfigurationTest;
 import com.moontech.healthyfood.configuration.TestConstants;
-import com.moontech.healthyfood.models.requests.OfficeRequest;
-import com.moontech.healthyfood.services.OfficeService;
+import com.moontech.healthyfood.models.requests.ParameterRequest;
+import com.moontech.healthyfood.services.ParameterService;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
@@ -16,14 +16,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 /**
- * Prueba del controlador de sucursales.
+ * Prueba del controlador de parámetros.
  *
  * @author Felipe Monzón
  * @enterprise moontech
@@ -36,24 +35,24 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @ExtendWith(SpringExtension.class)
 @WithMockUser(roles = TestConstants.ROLE_ADMIN)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class OfficeControllerTest extends MysqlBaseConfigurationTest {
+class ParameterControllerTest extends MysqlBaseConfigurationTest {
   /** Implementación de mock mvc. */
   @Autowired private MockMvc mockMvc;
-  /** Servicio de sucursales. */
-  @Autowired private OfficeService officeService;
+  /** Servicio de parámetros. */
+  @Autowired private ParameterService parameterService;
   /** Mapper. */
   @Autowired private ObjectMapper objectMapper;
-  /** Ruta base de perfiles. */
-  private static final String Office_BASE_PATH = "/offices";
+  /** Ruta base de parámetros. */
+  private static final String PARAMETER_BASE_PATH = "/parameters";
 
   @Test
   @Order(1)
-  @DisplayName("GET /offices empty list")
+  @DisplayName("GET /parameters empty list")
   void retrieve_empty_profiles(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
         .perform(
-            MockMvcRequestBuilders.get(Office_BASE_PATH)
+            MockMvcRequestBuilders.get(PARAMETER_BASE_PATH)
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(
@@ -61,12 +60,12 @@ class OfficeControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
-  @DisplayName("GET /offices  search success")
+  @DisplayName("GET /parameters search office")
   void search_office(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
         .perform(
-            MockMvcRequestBuilders.get(Office_BASE_PATH + "/lejos")
+            MockMvcRequestBuilders.get(PARAMETER_BASE_PATH + "/LCAL")
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(
@@ -74,98 +73,95 @@ class OfficeControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
-  @DisplayName("GET /offices success")
+  @DisplayName("GET /parameters success")
   void retrieve_all_profiles(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+
     this.mockMvc
         .perform(
-            MockMvcRequestBuilders.get(Office_BASE_PATH)
+            MockMvcRequestBuilders.get(PARAMETER_BASE_PATH)
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(
             MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.*", Matchers.hasSize(7)));
+        .andExpect(MockMvcResultMatchers.jsonPath("$.*", Matchers.hasSize(7)))
+        .andReturn();
   }
 
   @Test
   @Order(2)
-  @DisplayName("POST /offices violation integrity")
-  void save_violation_integrity(TestInfo testInfo) throws Exception {
-    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.post(Office_BASE_PATH)
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
-        .andExpect(MockMvcResultMatchers.status().is4xxClientError());
-  }
-
-  @Test
-  @Order(4)
-  @Sql({"classpath:test-data.sql"})
-  @DisplayName("POST /offices success")
+  @DisplayName("POST /parameters success")
   void save_success(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
         .perform(
-            MockMvcRequestBuilders.post(Office_BASE_PATH)
+            MockMvcRequestBuilders.post(PARAMETER_BASE_PATH)
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
+                .content(this.objectMapper.writeValueAsString(this.getParameterRequest("LCAL"))))
+        .andExpect(MockMvcResultMatchers.status().isCreated());
+  }
+
+  @Test
+  @Order(4)
+  @DisplayName("POST /parameters bad request")
+  void save_badRequest(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    this.mockMvc
+        .perform(
+            MockMvcRequestBuilders.post(PARAMETER_BASE_PATH)
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(this.objectMapper.writeValueAsString(this.getParameterRequest(""))))
+        .andExpect(MockMvcResultMatchers.status().isBadRequest());
+  }
+
+  @Test
+  @Order(3)
+  @DisplayName("PUT /parameters success")
+  void update_success(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    this.mockMvc
+        .perform(
+            MockMvcRequestBuilders.put(PARAMETER_BASE_PATH + "/LCAL")
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(this.objectMapper.writeValueAsString(this.getParameterRequest("LCAL"))))
+        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+  }
+
+  @Test
+  @Order(6)
+  @DisplayName("DELETE /parameters success")
+  void delete_success(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    this.mockMvc
+        .perform(
+            MockMvcRequestBuilders.delete(PARAMETER_BASE_PATH + "/LCAL")
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
+                .contentType(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
   }
 
   @Test
   @Order(5)
-  @DisplayName("POST /offices office exists")
-  void save_NoData(TestInfo testInfo) throws Exception {
+  @DisplayName("DELETE /parameters notFound")
+  void delete_notFound(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
         .perform(
-            MockMvcRequestBuilders.post(Office_BASE_PATH)
+            MockMvcRequestBuilders.delete(PARAMETER_BASE_PATH + "/LCA")
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
+                .contentType(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().is4xxClientError());
   }
 
-  @Test
-  @Order(6)
-  @DisplayName("PUT /offices success")
-  void update_success(TestInfo testInfo) throws Exception {
-    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.put(Office_BASE_PATH + "/1")
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
-        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-  }
-
-  @Test
-  @Order(3)
-  @DisplayName("PUT /offices not success")
-  void update_not_success(TestInfo testInfo) throws Exception {
-    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.put(Office_BASE_PATH + "/1")
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
-        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-  }
-
-  private OfficeRequest getOfficeRequest() {
-    OfficeRequest request = new OfficeRequest();
-    request.setId(1L);
-    request.setName("lejana");
-    request.setAddress("far far away");
-    request.setActive(Boolean.TRUE);
-    request.setPhone("6677156788");
-    request.setIdManager(2L);
+  private ParameterRequest getParameterRequest(String id) {
+    ParameterRequest request = new ParameterRequest();
+    request.setId(id);
+    request.setValue("LCAL");
+    request.setDescription("Calorias");
+    request.setStatus(Boolean.TRUE);
     return request;
   }
 }

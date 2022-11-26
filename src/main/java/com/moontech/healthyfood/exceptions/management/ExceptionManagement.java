@@ -253,7 +253,7 @@ public class ExceptionManagement {
         ErrorResponse.builder()
             .type(ErrorType.ERROR.name())
             .code(ErrorConstant.GENERIC_ERROR_CODE)
-            .message(message[2])
+            .message(message[0])
             .location(req.getRequestURI())
             .moreInfo(
                 message[1].replace(ErrorConstant.PREFIX_DETAIL_MESSAGE, StringUtils.EMPTY).trim())
