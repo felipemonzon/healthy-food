@@ -124,7 +124,7 @@ class OfficeControllerTest extends MysqlBaseConfigurationTest {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
         .perform(
-            MockMvcRequestBuilders.put(OFFICE_BASE_PATH + "/1")
+            MockMvcRequestBuilders.put(OFFICE_BASE_PATH + "/2")
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
