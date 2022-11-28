@@ -219,6 +219,7 @@
                             <excludes>
                                 <exclude>**/constant/**/*</exclude>
                                 <exclude>**/models/**/*</exclude>
+                                <exclude>**/exceptions/custom/**/*</exclude>
                                 <exclude>**/Main*</exclude>
                             </excludes>
                         </configuration>
