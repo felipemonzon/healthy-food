@@ -75,7 +75,6 @@ class OfficeControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
-  @Order(3)
   @DisplayName("PUT /offices not success")
   void update_not_success(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());

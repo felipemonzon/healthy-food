@@ -66,6 +66,36 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
+  @Order(2)
+  @Sql({"classpath:insert-office-data2.sql"})
+  @DisplayName("POST /users success")
+  void save_success(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    this.mockMvc
+        .perform(
+            MockMvcRequestBuilders.post(USER_BASE_PATH)
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                    objectMapper.writeValueAsString(this.getUserRequest("123456", "felipemonzon"))))
+        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+  }
+
+  @Test
+  @Order(3)
+  @DisplayName("PUT /users not success")
+  void update_not_success(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    this.mockMvc
+        .perform(
+            MockMvcRequestBuilders.put(USER_BASE_PATH + "/2")
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(this.getUserRequest("", "felipemonzon"))))
+        .andExpect(MockMvcResultMatchers.status().isNotFound());
+  }
+
+  @Test
   @DisplayName("GET /user initial")
   void retrieve_initial_data(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
@@ -140,22 +170,6 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
-  @Order(4)
-  @Sql({"classpath:insert-office-data2.sql"})
-  @DisplayName("POST /users success")
-  void save_success(TestInfo testInfo) throws Exception {
-    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.post(USER_BASE_PATH)
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                    objectMapper.writeValueAsString(this.getUserRequest("123456", "felipemonzon"))))
-        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-  }
-
-  @Test
   @Order(5)
   @DisplayName("POST /users exists")
   void save_NoData(TestInfo testInfo) throws Exception {
@@ -183,20 +197,6 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
         .andExpect(MockMvcResultMatchers.status().isNoContent());
   }
 
-  @Test
-  @Order(3)
-  @DisplayName("PUT /users not success")
-  void update_not_success(TestInfo testInfo) throws Exception {
-    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.put(USER_BASE_PATH + "/2")
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getUserRequest("", "felipemonzon"))))
-        .andExpect(MockMvcResultMatchers.status().isNotFound());
-  }
-
   private UserRequest getUserRequest(String password, String username) {
     UserRequest request = new UserRequest();
     request.setId(1L);
@@ -206,7 +206,7 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
     request.setFirstName("Felipe");
     request.setLastName("monzon");
     request.setUsername(username);
-    request.setBranchOfficeId(1L);
+    request.setBranchOfficeId(2L);
     request.setPassword(password);
     return request;
   }
