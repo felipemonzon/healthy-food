@@ -49,7 +49,7 @@ class OfficeControllerTest extends MysqlBaseConfigurationTest {
   @Test
   @Order(1)
   @DisplayName("GET /offices empty list")
-  void retrieve_empty_profiles(TestInfo testInfo) throws Exception {
+  void retrieve_empty(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
         .perform(
@@ -58,33 +58,6 @@ class OfficeControllerTest extends MysqlBaseConfigurationTest {
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(
             MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
-  }
-
-  @Test
-  @DisplayName("GET /offices  search success")
-  void search_office(TestInfo testInfo) throws Exception {
-    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(OFFICE_BASE_PATH + "/lejos")
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(
-            MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
-  }
-
-  @Test
-  @DisplayName("GET /offices success")
-  void retrieve_all_profiles(TestInfo testInfo) throws Exception {
-    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(OFFICE_BASE_PATH)
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(
-            MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.*", Matchers.hasSize(7)));
   }
 
   @Test
@@ -99,6 +72,20 @@ class OfficeControllerTest extends MysqlBaseConfigurationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
         .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+  }
+
+  @Test
+  @Order(3)
+  @DisplayName("PUT /offices not success")
+  void update_not_success(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    this.mockMvc
+        .perform(
+            MockMvcRequestBuilders.put(OFFICE_BASE_PATH + "/2")
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
+        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
   }
 
   @Test
@@ -118,7 +105,7 @@ class OfficeControllerTest extends MysqlBaseConfigurationTest {
 
   @Test
   @Order(5)
-  @DisplayName("POST /offices office exists")
+  @DisplayName("POST /offices exists")
   void save_NoData(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
@@ -145,17 +132,37 @@ class OfficeControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
-  @Order(3)
-  @DisplayName("PUT /offices not success")
-  void update_not_success(TestInfo testInfo) throws Exception {
+  @Order(7)
+  @DisplayName("GET /offices search success")
+  void search_office(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
         .perform(
-            MockMvcRequestBuilders.put(OFFICE_BASE_PATH + "/2")
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getOfficeRequest())))
-        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+            MockMvcRequestBuilders.get(OFFICE_BASE_PATH + "/lejos")
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(
+            MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+  }
+
+  @Test
+  @Order(8)
+  @DisplayName("GET /offices success")
+  void retrieve_all(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    String offices =
+        this.mockMvc
+            .perform(
+                MockMvcRequestBuilders.get(OFFICE_BASE_PATH)
+                    .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(
+                MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.*", Matchers.hasSize(7)))
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    log.info("Sucursales encontradas en test {}", offices);
   }
 
   private OfficeRequest getOfficeRequest() {
