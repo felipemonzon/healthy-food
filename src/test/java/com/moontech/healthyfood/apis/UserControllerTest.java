@@ -92,7 +92,7 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
-                    objectMapper.writeValueAsString(this.getUserRequest("", "felipemonzon2705"))))
+                    this.objectMapper.writeValueAsString(this.getUserRequest("", "felipemonzon"))))
         .andExpect(MockMvcResultMatchers.status().isNotFound());
   }
 
