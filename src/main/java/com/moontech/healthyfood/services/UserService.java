@@ -37,4 +37,33 @@ public interface UserService {
    * @return datos del usuario
    */
   UserResponse updateUserProfile(Authentication auth, UserRequest request);
+
+  /**
+   * Consulta usuarios por
+   *
+   * <ul>
+   *   <li>Nombre
+   *   <li>E-mail
+   *   <li>teléfono
+   * </ul>
+   *
+   * @param search parámetro de búsqueda
+   * @return lista de usuarios
+   */
+  List<UserResponse> findBy(String search);
+
+  /**
+   * Actualiza los datos del usuario
+   *
+   * @param id identificador del usuario
+   * @param request datos del usuario
+   */
+  void update(Long id, UserRequest request);
+
+  /**
+   * Guarda los datos de un usuario.
+   *
+   * @param request {@code UserRequest}
+   */
+  void save(UserRequest request);
 }

@@ -75,6 +75,8 @@ public class ErrorConstant {
   /** Mensaje para error de seguridad cuando los usuarios no concuerdan. */
   public static final String CANNOT_USER_PROFILE_UPDATE =
       "Ocurrió un error al actualizar los datos del usuario %s.";
+  /** Nombre de usuario ya existe. */
+  public static final String USERNAME_EXIST = "El nombre de usuario ya existe";
 
   /** Constructor privado. */
   private ErrorConstant() {}

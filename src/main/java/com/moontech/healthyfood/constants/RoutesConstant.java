@@ -27,6 +27,8 @@ public abstract class RoutesConstant {
   public static final String DATA_MODIFIED_PATH = "${api.uri.data.modified}";
   /** Ruta para cargar datos iniciales a páginas. */
   public static final String INITIAL_DATA_PATH = "${api.uri.data.initial}";
+  /** Ruta para actualizar los datos del perfil del usuario.. */
+  public static final String USER_PROFILE_DATA_PATH = "${api.uri.data.profile}";
 
   /** Constructor de la class. */
   private RoutesConstant() {}

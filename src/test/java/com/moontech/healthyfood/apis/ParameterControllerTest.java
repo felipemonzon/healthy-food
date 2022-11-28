@@ -156,6 +156,20 @@ class ParameterControllerTest extends MysqlBaseConfigurationTest {
         .andExpect(MockMvcResultMatchers.status().is4xxClientError());
   }
 
+  @Test
+  @Order(7)
+  @DisplayName("POST /parameters exists")
+  void save_exist_parameter(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    this.mockMvc
+        .perform(
+            MockMvcRequestBuilders.post(PARAMETER_BASE_PATH)
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(this.objectMapper.writeValueAsString(this.getParameterRequest("LCAL"))))
+        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+  }
+
   private ParameterRequest getParameterRequest(String id) {
     ParameterRequest request = new ParameterRequest();
     request.setId(id);

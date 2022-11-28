@@ -1,5 +1,5 @@
-# spring-template
-Plantilla para iniciar proyectos de spring
+# Healthy-food-service
+Administración de sistema de nutriólogos
 
 # Version
 ![version](https://img.shields.io/badge/version-1.0.0-blue.svg)
@@ -55,8 +55,19 @@ Las pruebas se realizaron con mockito y junit
 ### Generación de Reportes 📋
 Brindan un panorama general de varios reportes que son generados automáticamente por Maven.
 
-
 Los reportes se generan en la carpeta target > site > index.html
+
+### Formateador de sintaxis de código 📋
+Para formatear el código se realiza de la siguiente manera
+
+```
+mvn git-code-format:format-code -Dgcf.globPattern="**/*"   
+```
+Para validar el formato del código se realiza de l siguiente manera
+
+```
+mvn git-code-format:validate-code-format -Dgcf.globPattern="**/*"
+```
 
 ## Versionado 📌
 

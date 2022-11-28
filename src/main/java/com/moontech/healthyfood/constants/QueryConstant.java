@@ -18,9 +18,11 @@ public class QueryConstant {
    * </ul>
    */
   public static final String FIND_USER_BY =
-      "SELECT u.id, u.name, u.email, u.phone, u.active, u.id_branch_office, u.created_by, u.created_date, u.updated_by, u.updated_date, u.password "
-          + "FROM user u "
-          + "WHERE u.name LIKE %:search% "
+      "SELECT u.id, u.username, u.first_name, u.last_name, u.email, u.phone, u.id_office, u.created_by, "
+          + "u.created_date, u.updated_by, u.updated_date, u.password, u.genre "
+          + "FROM users u "
+          + "WHERE u.first_name LIKE %:search% "
+          + "OR u.last_name LIKE %:search% "
           + "OR u.email LIKE %:search% "
           + "OR u.phone LIKE %:search% ";
   /**

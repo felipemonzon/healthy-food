@@ -45,7 +45,6 @@ logging:
 # ===================================================================
 api:
   uri:
-    basePath: /api
     domain:
       users: /users
       offices: /offices
@@ -59,6 +58,7 @@ api:
       search: /{search}
       initial: /initial
       authentication: ${api.uri.domain.users}/authentication
+      profile: /profile
   interceptorPath: "/**"
 
 # ===================================================================

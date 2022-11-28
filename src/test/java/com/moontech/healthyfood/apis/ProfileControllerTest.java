@@ -111,6 +111,34 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
         .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
   }
 
+  @Test
+  @Order(4)
+  @DisplayName("PUT /profiles not exist profile")
+  void update_not_existe_profile(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    this.mockMvc
+        .perform(
+            MockMvcRequestBuilders.put(PROFILE_BASE_PATH + "/2")
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(this.getProfileRequest())))
+        .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+  }
+
+  @Test
+  @Order(5)
+  @DisplayName("POST /profiles exists")
+  void save_exists_profile(TestInfo testInfo) throws Exception {
+    log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
+    this.mockMvc
+        .perform(
+            MockMvcRequestBuilders.post(PROFILE_BASE_PATH)
+                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(this.getProfileRequest())))
+        .andExpect(MockMvcResultMatchers.status().isOk());
+  }
+
   private ProfileRequest getProfileRequest() {
     ProfileRequest request = new ProfileRequest();
     request.setId(1L);

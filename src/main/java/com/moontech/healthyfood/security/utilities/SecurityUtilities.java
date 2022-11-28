@@ -2,6 +2,7 @@ package com.moontech.healthyfood.security.utilities;
 
 import com.moontech.healthyfood.models.responses.SecurityResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.passay.CharacterData;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
@@ -78,7 +79,7 @@ public abstract class SecurityUtilities {
    * @return datos del usuario
    */
   public static SecurityResponse getUserData(final Authentication userCredentials) {
-    return (SecurityResponse) userCredentials.getPrincipal();
+    return new ModelMapper().map(userCredentials.getPrincipal(), SecurityResponse.class);
   }
 
   /**

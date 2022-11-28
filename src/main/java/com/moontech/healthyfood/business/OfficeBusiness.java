@@ -95,11 +95,15 @@ public class OfficeBusiness implements OfficeService {
    * @return {@link OfficeResponse} respuesta de sucursal
    */
   private OfficeResponse mapped(OfficeEntity entity) {
+    String manager = "Sin Asignar";
     OfficeResponse response = new ModelMapper().map(entity, OfficeResponse.class);
-    response.setManager(
-        entity.getManager().getFirstName()
-            + Utilities.WHITE_SPACE
-            + entity.getManager().getLastName());
+    if (response.getManager() != null) {
+      manager =
+          entity.getManager().getFirstName()
+              + Utilities.WHITE_SPACE
+              + entity.getManager().getLastName();
+    }
+    response.setManager(manager);
     return response;
   }
 

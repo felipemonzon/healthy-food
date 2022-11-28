@@ -19,6 +19,7 @@ import com.moontech.healthyfood.services.RoleService;
 import com.moontech.healthyfood.services.UserService;
 import com.moontech.healthyfood.utilities.Utilities;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,11 +67,7 @@ public class UserBusiness implements UserService {
     return response;
   }
 
-  /**
-   * {@inheritDoc}.
-   *
-   * @return
-   */
+  /** {@inheritDoc}. */
   @Override
   @Transactional
   public UserResponse updateUserProfile(Authentication auth, UserRequest request) {
@@ -83,17 +80,62 @@ public class UserBusiness implements UserService {
       entity.setGenre(request.getGenre());
       entity.setFirstName(request.getFirstName());
       entity.setLastName(request.getLastName());
-      final String password =
-          ObjectUtils.isEmpty(request.getPassword())
-              ? entity.getPassword()
-              : SecurityUtilities.passwordEncoder(request.getPassword());
-      entity.setPassword(password);
+      entity.setPassword(this.getPassword(entity.getPassword(), request.getPassword()));
       return this.mapping(this.userRepository.save(entity));
     } else {
       throw new BusinessException(
           ErrorConstant.RECORD_NOT_FOUND_CODE,
           String.format(ErrorConstant.CANNOT_USER_PROFILE_UPDATE, request.getUsername()));
     }
+  }
+  /** {@inheritDoc}. */
+  @Override
+  @Transactional(readOnly = true)
+  public List<UserResponse> findBy(String search) {
+    log.info("Consulta usuarios por {}", search);
+    return this.userRepository.findBy(search).stream()
+        .map(this::mapping)
+        .collect(Collectors.toList());
+  }
+
+  /** {@inheritDoc}. */
+  @Override
+  @Transactional
+  public void save(UserRequest request) {
+    log.info("Guarda un usuario {}", request);
+    Optional<UserEntity> user = this.userRepository.findByUsername(request.getUsername());
+    if (user.isPresent()) {
+      throw new BusinessException(ErrorConstant.DATA_EXIST_CODE, ErrorConstant.USERNAME_EXIST);
+    } else {
+      request.setPassword(SecurityUtilities.passwordEncoder(request.getPassword()));
+      this.userRepository.save(this.mapping(request));
+    }
+  }
+
+  /** {@inheritDoc}. */
+  @Override
+  @Transactional
+  public void update(Long id, UserRequest request) {
+    log.info("Actualiza los datos de un usuario {}", request);
+    UserEntity entity = this.validateUserById(id);
+    UserEntity user = this.mapping(request);
+    user.setUsername(entity.getUsername());
+    user.setPassword(this.getPassword(entity.getPassword(), request.getPassword()));
+    this.userRepository.save(user);
+  }
+
+  /**
+   * Valida si la contraseña nueva ésta vacía, si esta vacía retorna la contraseña antigua caso
+   * contrario genera una nueva.
+   *
+   * @param oldPassword contraseña vieja
+   * @param newPassword contraseña nueva
+   * @return contraseña
+   */
+  private String getPassword(final String oldPassword, String newPassword) {
+    return ObjectUtils.isEmpty(newPassword)
+        ? oldPassword
+        : SecurityUtilities.passwordEncoder(newPassword);
   }
 
   /**
@@ -122,6 +164,16 @@ public class UserBusiness implements UserService {
     response.setProfiles(entity.getRoles().stream().map(this::mapping).collect(Collectors.toSet()));
     response.setDisplayName(entity.getFirstName() + ApiConstant.WHITE_SPACE + entity.getLastName());
     return response;
+  }
+
+  /**
+   * Convierte una objeto {@code UserRequest} a una entidad de tipo {@code UserEntity}
+   *
+   * @param request objeto de tipo {@link UserRequest}
+   * @return datos de usuario para guardar en bd
+   */
+  private UserEntity mapping(UserRequest request) {
+    return new ModelMapper().map(request, UserEntity.class);
   }
 
   /**
