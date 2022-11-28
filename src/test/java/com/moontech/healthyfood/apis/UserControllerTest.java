@@ -88,7 +88,7 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
     this.mockMvc
         .perform(
-            MockMvcRequestBuilders.put(USER_BASE_PATH + "/2")
+            MockMvcRequestBuilders.put(USER_BASE_PATH + "/4")
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
