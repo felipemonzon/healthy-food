@@ -19,6 +19,8 @@ public abstract class TestConstants {
   public static final String UUID_HEADER = "uuid";
   /** Perfil de administrador. */
   public static final String ROLE_ADMIN = "ADMIN";
+  /** Perfil de otros. */
+  public static final String ROLE_OTHER = "OTHER";
   /** Log running. */
   public static final String TEST_RUNNING = "Running {}";
 
