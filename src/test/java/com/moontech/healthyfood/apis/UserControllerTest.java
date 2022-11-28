@@ -91,7 +91,8 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
             MockMvcRequestBuilders.put(USER_BASE_PATH + "/2")
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getUserRequest("", "felipemonzon"))))
+                .content(
+                    objectMapper.writeValueAsString(this.getUserRequest("", "felipemonzon2705"))))
         .andExpect(MockMvcResultMatchers.status().isNotFound());
   }
 
@@ -125,14 +126,19 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
   @DisplayName("GET /users success")
   void retrieve_all_users(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(USER_BASE_PATH)
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(
-            MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.*", Matchers.hasSize(7)));
+    String response =
+        this.mockMvc
+            .perform(
+                MockMvcRequestBuilders.get(USER_BASE_PATH)
+                    .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(
+                MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.*", Matchers.hasSize(7)))
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    log.info("usuarios encontrados {}", response);
   }
 
   @Test
