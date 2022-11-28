@@ -206,7 +206,7 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
     request.setFirstName("Felipe");
     request.setLastName("monzon");
     request.setUsername(username);
-    request.setBranchOfficeId(2L);
+    request.setBranchOfficeId(3L);
     request.setPassword(password);
     return request;
   }
