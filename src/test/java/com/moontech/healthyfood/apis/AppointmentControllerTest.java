@@ -1,6 +1,7 @@
 package com.moontech.healthyfood.apis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.moontech.healthyfood.configuration.MysqlBaseConfigurationTest;
 import com.moontech.healthyfood.configuration.TestConstants;
 import com.moontech.healthyfood.services.OfficeService;
 import java.util.UUID;
@@ -32,7 +33,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @ExtendWith(SpringExtension.class)
 @WithMockUser(roles = TestConstants.ROLE_ADMIN)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AppointmentControllerTest {
+public class AppointmentControllerTest extends MysqlBaseConfigurationTest {
   /** Implementación de mock mvc. */
   @Autowired private MockMvc mockMvc;
   /** Servicio de citas. */
