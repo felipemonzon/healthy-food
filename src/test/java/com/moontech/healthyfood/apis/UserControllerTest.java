@@ -7,7 +7,8 @@ import com.moontech.healthyfood.enums.Genre;
 import com.moontech.healthyfood.models.requests.UserRequest;
 import com.moontech.healthyfood.services.RoleService;
 import com.moontech.healthyfood.services.UserService;
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
@@ -68,7 +69,7 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
 
   @Test
   @Order(2)
-  @Sql({"classpath:insert-office-data2.sql"})
+  @Sql({"classpath:insert-office-data2.sql", "classpath:insert-rol-data.sql"})
   @DisplayName("POST /users success")
   void save_success(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
@@ -216,7 +217,9 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
     request.setUsername(username);
     request.setBranchOfficeId(3L);
     request.setPassword(password);
-    request.setProfiles(Collections.emptySet());
+    Set<Long> profiles = new HashSet<>();
+    profiles.add(4L);
+    request.setProfiles(profiles);
     return request;
   }
 }

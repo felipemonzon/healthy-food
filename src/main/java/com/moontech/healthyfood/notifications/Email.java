@@ -1,7 +1,10 @@
 package com.moontech.healthyfood.notifications;
 
 import java.util.Map;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Objeto para envío de correo.
@@ -10,7 +13,10 @@ import lombok.Data;
  * @enterprise moontech
  * @since Dec 01, 2022
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Email {
   /** Receptor del correo. */
   private String to;

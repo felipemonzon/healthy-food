@@ -90,8 +90,8 @@ api:
       payment: email-payment-subscription-template.flth
     welcome: Bienvenido
     from: felipemonzon2705@gmail.com
-    payment: Tu Recibo de la Membres\u00EDa
-    helpMessage: Estamos muy contentos de poder satisfacer sus necesidades de nutrici\u00F3n. Si tiene alguna pregunta sobre la suscripci\u00F3n o si surge alg\u00fan problema en el futuro, puede comunicarse con nosotros al 667 151 9169 o enviar un correo electr\u00F3nico a ayuda@gmail.com
+    payment: Tu Recibo de la Membresía
+    helpMessage: Estamos muy contentos de poder satisfacer sus necesidades de nutrición. Si tiene alguna pregunta sobre la suscripción o si surge algún problema en el futuro, puede comunicarse con nosotros al 667 100 0000 o enviar un correo electrónico a felipemonzon2705@gmail.com
 
 # ===================================================================
 # SWAGGER PROPERTIES

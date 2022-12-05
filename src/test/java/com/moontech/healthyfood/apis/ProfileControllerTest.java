@@ -59,14 +59,19 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
   @DisplayName("GET /profiles success")
   void retrieve_all_profiles(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
-    this.mockMvc
-        .perform(
-            MockMvcRequestBuilders.get(PROFILE_BASE_PATH)
-                .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(
-            MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.*", Matchers.hasSize(7)));
+    String response =
+        this.mockMvc
+            .perform(
+                MockMvcRequestBuilders.get(PROFILE_BASE_PATH)
+                    .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID())))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(
+                MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.*", Matchers.hasSize(7)))
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    log.info("perfiles encontrados en el test {}", response);
   }
 
   @Test
@@ -93,7 +98,7 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
             MockMvcRequestBuilders.post(PROFILE_BASE_PATH)
                 .header(TestConstants.UUID_HEADER, String.valueOf(UUID.randomUUID()))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(this.getProfileRequest())))
+                .content(this.objectMapper.writeValueAsString(this.getProfileRequest())))
         .andExpect(MockMvcResultMatchers.status().isCreated());
   }
 
@@ -141,8 +146,8 @@ class ProfileControllerTest extends MysqlBaseConfigurationTest {
 
   private ProfileRequest getProfileRequest() {
     ProfileRequest request = new ProfileRequest();
-    request.setId(1L);
-    request.setName("ROLE_ADMIN");
+    request.setId(3L);
+    request.setName("ROLE_TEST");
     request.setValue(TestConstants.ROLE_ADMIN);
     return request;
   }
