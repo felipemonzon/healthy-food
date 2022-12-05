@@ -6,6 +6,9 @@ Administración de sistema de nutriólogos
 
 Para más detalle mira el archivo [CHANGELOG](CHANGELOG)
 
+# Quality Gate
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=felipemonzon_healthy-food-service)](https://sonarcloud.io/summary/new_code?id=felipemonzon_healthy-food-service)
+
 ### Pre-requisitos 📋
 Tener instalado
 * Eclipse o tu IDE favorito
