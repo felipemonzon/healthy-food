@@ -1,8 +1,7 @@
 package com.moontech.healthyfood.notifications;
 
 import java.util.Map;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.core.io.Resource;
 
 /**
@@ -12,19 +11,22 @@ import org.springframework.core.io.Resource;
  * @enterprise moontech
  * @since Dec 01, 2022
  */
-@Data
+@Getter
+@Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MailConfiguration {
   /** Encabezado de compra. */
-  private final String payment;
+  private String payment;
   /** Encabezado de bienvenida. */
-  private final String welcome;
+  private String welcome;
   /** Destinatario del correo. */
-  private final String mail;
+  private String mail;
   /** Plantilla de correo para usuarios de la webapp. */
-  private final String templateUser;
+  private String templateUser;
   /** Plantilla de correo para clientes. */
-  private final String templateCustomer;
+  private String templateCustomer;
   /** Mensaje predeterminado de ayuda. */
   private String helpMessage;
   /** Icono de venta. */
