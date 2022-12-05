@@ -7,6 +7,7 @@ import com.moontech.healthyfood.enums.Genre;
 import com.moontech.healthyfood.models.requests.UserRequest;
 import com.moontech.healthyfood.services.RoleService;
 import com.moontech.healthyfood.services.UserService;
+import java.util.Collections;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
@@ -215,6 +216,7 @@ class UserControllerTest extends MysqlBaseConfigurationTest {
     request.setUsername(username);
     request.setBranchOfficeId(3L);
     request.setPassword(password);
+    request.setProfiles(Collections.emptySet());
     return request;
   }
 }

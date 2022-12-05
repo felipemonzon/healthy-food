@@ -5,6 +5,7 @@ import com.moontech.healthyfood.constants.ErrorConstant;
 import com.moontech.healthyfood.constants.LogConstant;
 import com.moontech.healthyfood.entities.RoleEntity;
 import com.moontech.healthyfood.entities.UserEntity;
+import com.moontech.healthyfood.enums.EmailTemplate;
 import com.moontech.healthyfood.exceptions.custom.BusinessException;
 import com.moontech.healthyfood.exceptions.custom.NotDataFoundException;
 import com.moontech.healthyfood.models.requests.UserRequest;
@@ -12,6 +13,7 @@ import com.moontech.healthyfood.models.responses.AuthorityResponse;
 import com.moontech.healthyfood.models.responses.InitialUserResponse;
 import com.moontech.healthyfood.models.responses.SecurityResponse;
 import com.moontech.healthyfood.models.responses.UserResponse;
+import com.moontech.healthyfood.notifications.MailSender;
 import com.moontech.healthyfood.repositories.UserRepository;
 import com.moontech.healthyfood.security.utilities.SecurityUtilities;
 import com.moontech.healthyfood.services.OfficeService;
@@ -46,6 +48,8 @@ public class UserBusiness implements UserService {
   private final OfficeService officeService;
   /** Servicio para perfiles. */
   private final RoleService roleService;
+  /** Servicio para mensajería. */
+  private final MailSender mailSender;
 
   /** {@inheritDoc}. */
   @Override
@@ -88,6 +92,7 @@ public class UserBusiness implements UserService {
           String.format(ErrorConstant.CANNOT_USER_PROFILE_UPDATE, request.getUsername()));
     }
   }
+
   /** {@inheritDoc}. */
   @Override
   @Transactional(readOnly = true)
@@ -107,8 +112,18 @@ public class UserBusiness implements UserService {
     if (user.isPresent()) {
       throw new BusinessException(ErrorConstant.DATA_EXIST_CODE, ErrorConstant.USERNAME_EXIST);
     } else {
-      request.setPassword(SecurityUtilities.passwordEncoder(request.getPassword()));
-      this.userRepository.save(this.mapping(request));
+      String password = SecurityUtilities.generateSecurePassword();
+      request.setPassword(SecurityUtilities.passwordEncoder(password));
+      UserEntity userEntity = this.mapping(request);
+      userEntity.setRoles(
+          request.getProfiles().stream().map(this::mapping).collect(Collectors.toSet()));
+      this.userRepository.save(userEntity);
+      this.mailSender.sendMail(
+          Utilities.getEmailData(
+              request,
+              password,
+              this.officeService.getOfficeName(userEntity.getBranchOffice().getId())),
+          EmailTemplate.USER);
     }
   }
 
@@ -121,6 +136,7 @@ public class UserBusiness implements UserService {
     UserEntity user = this.mapping(request);
     user.setUsername(entity.getUsername());
     user.setPassword(this.getPassword(entity.getPassword(), request.getPassword()));
+    user.setRoles(request.getProfiles().stream().map(this::mapping).collect(Collectors.toSet()));
     this.userRepository.save(user);
   }
 
@@ -184,5 +200,17 @@ public class UserBusiness implements UserService {
    */
   private AuthorityResponse mapping(RoleEntity entity) {
     return new ModelMapper().map(entity, AuthorityResponse.class);
+  }
+
+  /**
+   * Convierte genera una entidad de tipo {@code RoleEntity}
+   *
+   * @param idProfile identificador del perfil
+   * @return entidad para perfiles
+   */
+  private RoleEntity mapping(Long idProfile) {
+    RoleEntity role = new RoleEntity();
+    role.setId(idProfile);
+    return role;
   }
 }

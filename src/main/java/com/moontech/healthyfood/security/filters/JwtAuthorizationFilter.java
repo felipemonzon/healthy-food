@@ -70,17 +70,21 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
       logger.debug(LogConstant.INVALID_PREFIX_TOKEN);
       httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
       httpServletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
-      httpServletResponse
-          .getWriter()
-          .print(
-              new ObjectMapper()
-                  .writeValueAsString(
-                      ErrorResponse.builder()
-                          .type(ExceptionManagement.ErrorType.INVALID.name())
-                          .code(ErrorConstant.INVALID_TOKEN_CODE)
-                          .message(ErrorConstant.INVALID_TOKEN_MESSAGE)
-                          .uuid(httpServletRequest.getHeader(ApiConstant.HEADER_UUID))
-                          .build()));
+      if (!httpServletRequest.getRequestURI().contains("/swagger")
+          && !httpServletRequest.getRequestURI().contains("/v3/api-docs")) {
+        httpServletResponse
+            .getWriter()
+            .print(
+                new ObjectMapper()
+                    .writeValueAsString(
+                        ErrorResponse.builder()
+                            .type(ExceptionManagement.ErrorType.INVALID.name())
+                            .code(ErrorConstant.INVALID_TOKEN_CODE)
+                            .message(ErrorConstant.INVALID_TOKEN_MESSAGE)
+                            .uuid(httpServletRequest.getHeader(ApiConstant.HEADER_UUID))
+                            .build()));
+      }
+
       filterChain.doFilter(httpServletRequest, httpServletResponse);
       return;
     }

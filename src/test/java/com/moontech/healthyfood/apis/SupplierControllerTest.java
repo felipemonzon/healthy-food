@@ -46,7 +46,7 @@ class SupplierControllerTest extends MysqlBaseConfigurationTest {
   private static final String SUPPLIER_BASE_PATH = "/suppliers";
 
   @Test
-  @Order(1)
+  @Order(10)
   @DisplayName("GET /suppliers success")
   void retrieve_suppliers_success(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
@@ -149,7 +149,7 @@ class SupplierControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
-  @Order(7)
+  @Order(8)
   @DisplayName("DELETE /suppliers success")
   void delete_success(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());
@@ -161,7 +161,7 @@ class SupplierControllerTest extends MysqlBaseConfigurationTest {
   }
 
   @Test
-  @Order(8)
+  @Order(9)
   @DisplayName("PATCH /suppliers method not supported")
   void method_not_supported(TestInfo testInfo) throws Exception {
     log.info(TestConstants.TEST_RUNNING, testInfo.getDisplayName());

@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -102,7 +101,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf()
         .disable()
         .authorizeRequests()
-        .antMatchers("/v2/**", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**")
+        .antMatchers(WHITELIST)
         .permitAll()
         .anyRequest()
         .authenticated()
@@ -117,19 +116,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             UsernamePasswordAuthenticationFilter.class)
         .addFilterBefore(
             this.jwtAuthorizationFilterBean(), UsernamePasswordAuthenticationFilter.class);
-  }
-
-  @Override
-  public void configure(WebSecurity web) {
-    web.ignoring()
-        .antMatchers("/swagger-ui/index.html")
-        .antMatchers(
-            "/v2/api-docs",
-            "/configuration/ui",
-            "/swagger-resources/**",
-            "/configuration/**",
-            "/swagger-ui.html",
-            "/webjars/**");
   }
 
   /**
@@ -163,4 +149,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     source.registerCorsConfiguration("/**", config);
     return new CorsFilter(source);
   }
+
+  private static final String[] WHITELIST = {
+    "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
+  };
 }

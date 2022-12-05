@@ -16,7 +16,27 @@ spring:
     naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     hibernate.ddl-auto: update
 
-
+# ===================================================================
+# MAIL PROPERTIES
+# ===================================================================
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: ulquiorra.kurosaki50@gmail.com
+    password: urzxuqfyrrqtdyiw
+    server:
+      protocol: smtp
+      debug: false
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  freemarker:
+    enabled: true
+    template-loader-path: classpath:/templates
 # ===================================================================
 # SECURITY PROPERTIES
 # ===================================================================
@@ -60,6 +80,18 @@ api:
       authentication: ${api.uri.domain.users}/authentication
       profile: /profile
   interceptorPath: "/**"
+  # ===================================================================
+  # MAIL TEMPLATE PROPERTIES
+  # ===================================================================
+  mail:
+    templates:
+      user: email-user-template.flth
+      customer: email-customer-template.flth
+      payment: email-payment-subscription-template.flth
+    welcome: Bienvenido
+    from: felipemonzon2705@gmail.com
+    payment: Tu Recibo de la Membres\u00EDa
+    helpMessage: Estamos muy contentos de poder satisfacer sus necesidades de nutrici\u00F3n. Si tiene alguna pregunta sobre la suscripci\u00F3n o si surge alg\u00fan problema en el futuro, puede comunicarse con nosotros al 667 151 9169 o enviar un correo electr\u00F3nico a ayuda@gmail.com
 
 # ===================================================================
 # SWAGGER PROPERTIES

@@ -1,17 +1,16 @@
 package com.moontech.healthyfood.configs;
 
 import com.moontech.healthyfood.properties.SwaggerProperties;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Configuración para swagger-ui.
@@ -20,7 +19,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @since Dec 17, 2021
  */
 @Configuration
-@EnableSwagger2
 @RequiredArgsConstructor
 public class SwaggerConfig {
   /** Constantes con los valores obtenidos del archivo properties. */
@@ -32,14 +30,20 @@ public class SwaggerConfig {
    * @return información del producto
    */
   @Bean
-  public Docket productApi() {
-    return new Docket(DocumentationType.SWAGGER_2)
-        .apiInfo(this.apiInfo())
-        .useDefaultResponseMessages(Boolean.FALSE)
-        .select()
-        .apis(RequestHandlerSelectors.basePackage(this.swaggerConstants.getBasePackage()))
-        .paths(PathSelectors.any())
-        .build();
+  public OpenAPI productApi() {
+    final String securitySchemeName = "Auth JWT";
+    return new OpenAPI()
+        .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
+        .components(
+            new Components()
+                .addSecuritySchemes(
+                    securitySchemeName,
+                    new SecurityScheme()
+                        .name(securitySchemeName)
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer")
+                        .bearerFormat("JWT")))
+        .info(this.apiInfo());
   }
 
   /**
@@ -47,16 +51,16 @@ public class SwaggerConfig {
    *
    * @return información del producto
    */
-  private ApiInfo apiInfo() {
-    return new ApiInfoBuilder()
-        .title(swaggerConstants.getTitle())
-        .description(swaggerConstants.getDescriptionApi())
-        .version(swaggerConstants.getVersion())
+  private Info apiInfo() {
+    return new Info()
+        .title(this.swaggerConstants.getTitle())
+        .description(this.swaggerConstants.getDescriptionApi())
+        .version(this.swaggerConstants.getVersion())
         .contact(
-            new Contact(
-                swaggerConstants.getNameDeveloper(),
-                swaggerConstants.getContactUrl(),
-                swaggerConstants.getEmailDeveloper()))
-        .build();
+            new Contact()
+                .email(this.swaggerConstants.getEmailDeveloper())
+                .name(this.swaggerConstants.getNameDeveloper())
+                .url(this.swaggerConstants.getContactUrl()))
+        .license(new License().name("MIT"));
   }
 }

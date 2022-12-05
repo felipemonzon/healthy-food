@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,6 +77,15 @@ public class OfficeBusiness implements OfficeService {
     return this.officeRepository.findBy(search).stream()
         .map(this::mapped)
         .collect(Collectors.toList());
+  }
+
+  /** {@inheritDoc}. */
+  @Override
+  public String getOfficeName(final Long idOffice) {
+    return this.officeRepository
+        .findById(idOffice)
+        .map(OfficeEntity::getName)
+        .orElse(StringUtils.EMPTY);
   }
 
   /**

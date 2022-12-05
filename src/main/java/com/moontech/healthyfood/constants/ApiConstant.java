@@ -32,6 +32,22 @@ public abstract class ApiConstant {
   public static final String WHITE_SPACE = " ";
   /** Usuario de sistema. */
   public static final String USER_SYSTEM = "System";
+  /** Propiedades para el correo. */
+  public static final String PROPERTIES_MAIL = "api.mail";
+  /** Texto a de ayuda del correo. */
+  public static final String MAIL_HELP_MESSAGE_PROPERTY = "helpMessage";
+  /** Formato para fecha completa. */
+  public static final String DATE_PATTERN = "dd-MM-yyyy";
+  /** Nombre del destinatario del correo. */
+  public static final String MAIL_NAME_PROPERTY = "name";
+  /** Teléfono del destinatario del correo. */
+  public static final String MAIL_PHONE_PROPERTY = "phone";
+  /** Usuario del destinatario del correo. */
+  public static final String MAIL_USER_PROPERTY = "user";
+  /** Contraseña del destinatario del correo. */
+  public static final String MAIL_PASSWORD_PROPERTY = "password";
+  /** Sucursal del destinatario del correo. */
+  public static final String MAIL_OFFICE_PROPERTY = "office";
 
   private ApiConstant() {}
 }

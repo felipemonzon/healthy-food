@@ -47,4 +47,12 @@ public interface OfficeService {
    * @return lista de sucursales encontrada {@link OfficeResponse}
    */
   List<OfficeResponse> findBy(String search);
+
+  /**
+   * Consulta el nombre de la sucursal.
+   *
+   * @param idOffice identificador de la sucursal
+   * @return nombre de la sucursal
+   */
+  String getOfficeName(final Long idOffice);
 }
