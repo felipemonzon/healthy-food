@@ -29,4 +29,6 @@ public class SwaggerProperties {
   private String contactUrl;
   /** Email del desarrollador. */
   private String emailDeveloper;
+  /** URI de la licencia. */
+  private String licenceUrl;
 }

@@ -85,6 +85,23 @@ public abstract class DatabaseConstant {
   public static final String PROPERTY_UNIT_NAME = "name";
   /** Propiedad para la abreviación de la unidad parámetro. */
   public static final String PROPERTY_UNIT_ABBREVIATION = "abbreviation";
+  /** Nombre de la tabla "citas". */
+  public static final String TABLE_APPOINTMENT = "appointments";
+  /** Propiedad para el título de la cita. */
+  public static final String PROPERTY_APPOINTMENT_NAME = "title";
+  /** Propiedad para el inicio de la cita. */
+  public static final String PROPERTY_APPOINTMENT_START_DATE = "start_date";
+  /** Propiedad para el final de la cita. */
+  public static final String PROPERTY_APPOINTMENT_END_DATE = "end_date";
+  /** Propiedad para la relación sucursales - usuarios. */
+  public static final String RELATION_APPOINTMENT_CUSTOMER_NAME = "customer";
+  /** Nombre de la tabla "clientes". */
+  public static final String TABLE_CUSTOMER = "customers";
+  /** Propiedad para el identificador del cliente. */
+  public static final String PROPERTY_CUSTOMER_ID = "id_customer";
+  /** Propiedad para el identificador de la cita del cliente. */
+  public static final String PROPERTY_APPOINTMENT = "id";
+
   /** Constructor privado. */
   private DatabaseConstant() {}
 }

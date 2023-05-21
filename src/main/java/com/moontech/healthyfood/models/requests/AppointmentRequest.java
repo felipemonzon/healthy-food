@@ -1,10 +1,10 @@
 package com.moontech.healthyfood.models.requests;
 
+import com.moontech.healthyfood.enums.Status;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import lombok.Data;
 
 /**
@@ -21,7 +21,9 @@ public class AppointmentRequest implements Serializable {
   /** Título de la cita */
   @NotBlank private String title;
   /** Fecha inicio. */
-  @Past @NotNull private LocalDateTime start;
+  @NotNull private LocalDateTime start;
   /** Fecha final. */
   private LocalDateTime end;
+  /** Propiedad para el status de la cita. */
+  @NotNull private Status status;
 }

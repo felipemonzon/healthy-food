@@ -61,6 +61,6 @@ public class SwaggerConfig {
                 .email(this.swaggerConstants.getEmailDeveloper())
                 .name(this.swaggerConstants.getNameDeveloper())
                 .url(this.swaggerConstants.getContactUrl()))
-        .license(new License().name("MIT"));
+        .license(new License().name("MIT LICENCE").url(this.swaggerConstants.getLicenceUrl()));
   }
 }

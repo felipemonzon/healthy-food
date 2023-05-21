@@ -71,7 +71,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
       httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
       httpServletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
       if (!httpServletRequest.getRequestURI().contains("/swagger")
-          && !httpServletRequest.getRequestURI().contains("/v3/api-docs")) {
+          && !httpServletRequest.getRequestURI().contains("/v3/api-docs")
+          && !httpServletRequest.getRequestURI().contains("/actuator")
+          && !httpServletRequest.getRequestURI().contains("/health")) {
         httpServletResponse
             .getWriter()
             .print(

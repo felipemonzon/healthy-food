@@ -6,6 +6,9 @@ Administración de sistema de nutriólogos
 
 Para más detalle mira el archivo [CHANGELOG](CHANGELOG)
 
+# Unit Test
+[![Unit test](https://github.com/felipemonzon/healthy-food-service/actions/workflows/maven.yml/badge.svg)](https://github.com/felipemonzon/healthy-food-service/actions/workflows/maven.yml)
+
 # Quality Gate
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=felipemonzon_healthy-food-service)](https://sonarcloud.io/summary/new_code?id=felipemonzon_healthy-food-service)
 

@@ -151,6 +151,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   private static final String[] WHITELIST = {
-    "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
+    "/v3/api-docs/**",
+    "/swagger-ui/**",
+    "/swagger-ui.html",
+    "/health",
+    "/actuator/health/**",
+    "/actuator/info/**",
+    "/actuator/prometheus"
   };
 }

@@ -37,6 +37,21 @@ spring:
   freemarker:
     enabled: true
     template-loader-path: classpath:/templates
+
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, shutdown, prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
 # ===================================================================
 # SECURITY PROPERTIES
 # ===================================================================
@@ -73,12 +88,15 @@ api:
       units: /units
       profiles: /profiles
       appointments: /appointments
+      customers: /customers
     data:
       modified: /{id}
       search: /{search}
       initial: /initial
       authentication: ${api.uri.domain.users}/authentication
       profile: /profile
+      customer:
+        appointments: /{idCustomer}${api.uri.domain.appointments}
   interceptorPath: "/**"
   # ===================================================================
   # MAIL TEMPLATE PROPERTIES

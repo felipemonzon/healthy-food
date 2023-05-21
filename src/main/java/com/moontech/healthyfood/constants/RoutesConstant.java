@@ -21,6 +21,10 @@ public abstract class RoutesConstant {
   public static final String PROFILE_BASE_PATH = "${api.uri.domain.profiles}";
   /** Ruta base para citas. */
   public static final String APPOINTMENT_BASE_PATH = "${api.uri.domain.appointments}";
+  /** Ruta base para clientes. */
+  public static final String CUSTOMER_BASE_PATH = "${api.uri.domain.customers}";
+  /** Ruta base para las citas de los clientes. */
+  public static final String CUSTOMER_APPOINTMENTS_PATH = "${api.uri.data.customer.appointments}";
   /** Ruta para búsqueda datos. */
   public static final String SEARCH_PATH = "${api.uri.data.search}";
   /** Ruta para modificar datos. */
